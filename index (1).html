@@ -55,13 +55,17 @@ h1 span{color:var(--cyan)}
 .card{background:var(--card);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--line);transition:transform .15s, box-shadow .15s}
 .card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(157,10,91,.10)}
 .pic{aspect-ratio:1/1;background:linear-gradient(135deg,var(--soft),#e8f7fc);display:grid;place-items:center;position:relative}
-.pic img{width:100%;height:100%;object-fit:cover}
+.pic img{width:100%;height:100%;object-fit:contain;background:#fff}
 .pic svg{width:42%;height:42%}
 .badge{position:absolute;top:12px;right:12px;background:#fff;color:var(--plum);font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px}
 .badge.out{background:var(--pink);color:#fff}
 .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
 .name{font-weight:700;font-size:17px;margin:0}
 .unit{color:var(--muted);font-size:13px}
+.desc{margin:2px 0 0;color:#4d4552;font-size:13.5px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.desc.open{display:block}
+.more{background:none;border:0;padding:0;color:var(--plum);font:700 12.5px "Cairo";cursor:pointer;align-self:flex-start}
+.note{font-size:12.5px;color:var(--muted);max-width:640px;margin:0 auto 10px;line-height:1.7}
 .price{font-size:22px;font-weight:800;color:var(--plum);margin-top:auto}
 .price small{font-size:14px;font-weight:600}
 .actions{display:flex;gap:8px;margin-top:8px}
@@ -80,6 +84,9 @@ h1 span{color:var(--cyan)}
 .contact p{margin:0 0 14px;color:var(--muted)}
 .contact .btn{max-width:320px;margin:0 auto;padding:12px}
 .contact .num{display:block;margin-top:10px;font-weight:700;direction:ltr}
+.chan{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:var(--wa);color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:9px 20px;border-radius:999px;box-shadow:0 6px 16px rgba(31,168,85,.3)}
+.chan svg{width:20px;height:20px}
+.chan2{display:block;margin-top:14px;color:var(--wa);font-weight:700;text-decoration:none}
 
 .cart{position:fixed;inset:auto 0 0 0;background:#fff;border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.06);transform:translateY(110%);transition:transform .25s;z-index:10}
 .cart.show{transform:none}
@@ -96,6 +103,7 @@ h1 span{color:var(--cyan)}
   .body{padding:10px 10px 12px}
   .name{font-size:14.5px;line-height:1.45}
   .unit{font-size:12px}
+  .desc{font-size:12.5px;-webkit-line-clamp:3}
   .price{font-size:18px}
   .actions{gap:6px}
   .btn{padding:9px 6px;font-size:12.5px;gap:4px}
@@ -124,11 +132,42 @@ body.has-cart .fab{bottom:96px}
 .item .nm small{display:block;color:var(--muted);font-weight:400}
 .qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .qty button{width:34px;height:34px;border:0;background:#f7f3f5;font:700 18px "Cairo";cursor:pointer;color:var(--plum)}
+.qty button:disabled{opacity:.35;cursor:not-allowed}
+.low{color:#d4380d;font-size:12.5px;font-weight:700}
+.cart .sum .hint{color:var(--muted);font-weight:400}
+.pay{padding:12px 0 6px;border-top:1px solid var(--line)}
+.pay .pt{font-weight:700;font-size:14px;margin-bottom:8px}
+.pos{display:flex;gap:8px;flex-wrap:wrap}
+.po{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font:600 13.5px "Cairo";cursor:pointer}
+.po.on{background:var(--plum);border-color:var(--plum);color:#fff}
+.pbox{margin-top:10px;background:#fbf7f9;border:1px dashed #e6c9d7;border-radius:12px;padding:10px 12px;font-size:13.5px}
+.pbox .acc{display:flex;align-items:center;gap:10px;margin:6px 0}
+.pbox .acc b{font-size:16px}
+.cp{border:0;background:var(--cyan);color:#fff;border-radius:8px;padding:4px 12px;font:700 12.5px "Cairo";cursor:pointer}
+.plink{display:inline-block;margin:2px 0 6px;color:var(--plum);font-weight:700}
+.pbox small{display:block;color:var(--muted)}
 .qty span{min-width:30px;text-align:center;font-weight:700}
+.promo{background:linear-gradient(90deg,var(--plum),var(--pink));color:#fff;text-align:center;font-weight:700;font-size:15px;padding:9px 14px;line-height:1.5}
+.promo:empty{display:none}
+.promo .sep{opacity:.6;margin:0 6px}
+.promo .pi{display:inline-block}
+@media (max-width:560px){.promo{font-size:13.5px;padding:7px 10px}.promo .sep{display:none}.promo .pi{display:block}}
+.promo b{background:#fff;color:var(--plum);padding:1px 8px;border-radius:999px;margin:0 2px}
+.cart .sum .off{color:var(--wa);font-weight:700}
+.cart .sum .near{color:var(--pink);font-weight:700}
+.cart .sum div{white-space:normal}
+.cart .sum s{color:var(--muted);font-weight:400;font-size:14px}
 footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 30px}
+@media (max-width:560px){
+  .fab{width:48px;height:48px;left:12px;bottom:14px}
+  .fab svg{width:26px;height:26px}
+  body.has-cart .fab{bottom:88px}
+}
 </style>
 </head>
 <body>
+
+<div class="promo" id="promo"></div>
 
 <header>
   <div class="wrap">
@@ -136,6 +175,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 30px}
     <h1>NutriNest <span>–</span> علاج التغذية</h1>
     <p class="tag">منتجات تغذية وعناية مختارة — اختار اللي يناسبك واطلبه في ثواني على واتساب.</p>
     <div class="how"><span>١. اختار المنتج</span><span>٢. اضغط «اطلب على واتساب»</span><span>٣. هنأكد معاك الطلب والتوصيل</span></div>
+    <a class="chan" href="https://whatsapp.com/channel/0029VbEfb77JJhzUEXhQfB2a" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4a1 1 0 0 0 1 1h2l5 4V5L6 9H4a1 1 0 0 0-1 1Zm13.5 2A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4ZM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6Z"/></svg>تابع قناتنا على واتساب للعروض الجديدة</a>
   </div>
 </header>
 
@@ -153,10 +193,13 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 30px}
     <p>كلمنا على واتساب وهنساعدك تختار المنتج المناسب ليك.</p>
     <a class="btn btn-wa" id="askBtn" href="#" target="_blank" rel="noopener"></a>
     <span class="num" id="waText"></span>
+    <a class="chan2" href="https://whatsapp.com/channel/0029VbEfb77JJhzUEXhQfB2a" target="_blank" rel="noopener">📢 تابع قناة NutriNest على واتساب، ورقمك مش بيظهر لحد</a>
   </section>
 </main>
 
-<footer>© <span id="yr"></span> NutriNest – علاج التغذية • الأسعار بالجنيه المصري</footer>
+<footer>
+  <p class="note">المنتجات مكملات غذائية ومستحضرات تجميل، ومش بديل عن استشارة الطبيب. غير مناسبة للحوامل والمرضعات وأصحاب الأمراض المزمنة إلا بعد استشارة الطبيب.</p>
+ © <span id="yr"></span> NutriNest – علاج التغذية • الأسعار بالجنيه المصري</footer>
 
 <a class="fab" id="fab" href="#" target="_blank" rel="noopener" aria-label="كلمنا على واتساب"></a>
 
@@ -174,23 +217,33 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 30px}
 const WHATSAPP_NUMBER = "201228779295";
 const STORE_NAME = "NutriNest";
 
-/* لينك Google Sheet بعد «Publish to web» بصيغة CSV.
+/* لينك Google Sheet (تاب «المنتجات») بصيغة CSV.
    لو فاضي أو الشيت مفتحش، الصفحة بتستخدم القايمة اللي تحت كنسخة احتياطية. */
-const SHEET_CSV_URL = "";
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1UgSTsBCgpOLtAYGZxuALx4oB48jqisPGAIgHd_ch86E/gviz/tq?tqx=out:csv&sheet=%D8%A7%D9%84%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA";
+
+/* العرض: نسبة الخصم والحد الأدنى للطلب (اكتب 0 في النسبة عشان تلغي العرض) */
+const DISCOUNT_PCT = 10;     // اكتب 15 يوم الجمعة البيضاء، وارجعها 10 بعدها
+const DISCOUNT_MIN = 1000;
+const GIFT_MIN = 600;        // اكتب 0 عشان تلغي الهدية
+const GIFT_NAME = "أعشاب أو نقط";
+
+/* الدفع: سيبهم فاضيين لو مش عايز تعرضهم (الكاش عند الاستلام دايمًا موجود) */
+const INSTAPAY = "01099921514";         // عنوان إنستاباي، مثال: nutrinest@instapay
+const INSTAPAY_LINK = "https://ipn.eg/S/a.ramadan.777/instapay/7miURe";    // لينك الدفع من تطبيق إنستاباي (اختياري)، مثال: https://ipn.eg/S/nutrinest/instapay/xxxx
+const VFCASH = "01099921514";           // رقم محفظة فودافون كاش، مثال: 01012345678
 
 /* نسخة احتياطية من المنتجات (بتظهر لو الشيت مش متاح).
    inStock:false = يظهر «نفد مؤقتًا».  best:1 / 2 / 3 = يظهر في «الأكثر مبيعًا» بالترتيب ده (امسحها عشان تشيله).  img: اسم ملف الصورة لما ترفعها (مثلاً "green-coffee.jpg") */
 let PRODUCTS = [
-  {name:"قهوة خضرا سوبر جرين كوفي", unit:"وحدة",  price:180, cat:"قهوة",            inStock:true,  img:"", best:1},
-  {name:"قهوة بيضة نسكافيه",          unit:"وحدة",  price:220, cat:"قهوة",            inStock:true,  img:""},
-  {name:"قهوة كونجاك",                unit:"وحدة",  price:220, cat:"قهوة",            inStock:true,  img:""},
-  {name:"براند كاب بلس",              unit:"شريط",  price:130, cat:"برشام وكبسولات",  inStock:false, img:"", best:3},
-  {name:"برشام اكسبريس الأصفر",       unit:"شريط",  price:120, cat:"برشام وكبسولات",  inStock:true,  img:"", best:2},
-  {name:"أعشاب",                      unit:"علبة",  price:70,  cat:"أعشاب ونقط",      inStock:true,  img:""},
-  {name:"نقط",                        unit:"وحدة",  price:70,  cat:"أعشاب ونقط",      inStock:true,  img:""},
-  {name:"كريم كونجاك",                unit:"وحدة",  price:100, cat:"كريمات",          inStock:true,  img:""},
-  {name:"كريم ماكس فيلر",             unit:"وحدة",  price:100, cat:"كريمات",          inStock:true,  img:""},
-  {name:"أمبول جلسات",                unit:"أمبول", price:600, cat:"أمبولات",         inStock:true,  img:""},
+  {name:"قهوة خضرا سوبر جرين كوفي", unit:"وحدة",  price:180, cat:"قهوة",            inStock:true,  img:"super-green-coffee.webp", best:1, desc:"قهوة خضراء سريعة التحضير من 30 Green Coffee، بخلاصات عشبية مع الكروم والجنسنج. العلبة 30 كيس × 5 جم. الاستخدام: كيس واحد في 100 مل مية سخنة، كوباية في اليوم، مع نظام غذائي صحي.", stock:2},
+  {name:"قهوة ألترا جرين كوفي",       unit:"وحدة",  price:220, cat:"قهوة",            inStock:true,  img:"ultra-green-coffee.webp", desc:"قهوة خضراء Ultra Green Coffee غنية بالجارسينيا والألياف الطبيعية، في أكياس فردية سهلة التحضير. تُستخدم مع نظام غذائي صحي ونشاط بدني.", stock:3},
+  {name:"قهوة كونجاك دايت",           unit:"وحدة",  price:220, cat:"قهوة",            inStock:true,  img:"konjac-coffee.webp", desc:"قهوة دايت من Fettarm بخلاصة الكونجاك. العلبة 30 كيس × 5 جم. كيس واحد في اليوم في مية سخنة بدل قهوتك المعتادة.", stock:3},
+  {name:"براند كاب بلس",              unit:"شريط",  price:130, cat:"برشام وكبسولات",  inStock:false, img:"brand-cap-plus.webp", best:3, desc:"كبسولات أعشاب Brand Cap Plus من Fettarm. على كل علبة كود تقدر تتأكد بيه إن المنتج أصلي من موقع الشركة. تُستخدم حسب الإرشادات المكتوبة على العبوة.", stock:0},
+  {name:"كبسولات إكسبريس سليم",       unit:"شريط",  price:120, cat:"برشام وكبسولات",  inStock:true,  img:"xpress-slim.webp", best:2, desc:"كبسولات Xpress Slim من Golden Line في علبة معدنية، 36 كبسولة × 500 مجم. تُستخدم حسب الإرشادات المكتوبة على العبوة.", stock:6},
+  {name:"شاي أعشاب كونجاك",           unit:"علبة",  price:70,  cat:"أعشاب ونقط",      inStock:true,  img:"konjac-tea.webp", desc:"شاي أعشاب Konjac من Herbal Kings. العلبة 30 فتلة × 2 جم. فتلة واحدة في كوباية مية سخنة.", stock:5},
+  {name:"نقط أعشاب كونجاك",           unit:"وحدة",  price:70,  cat:"أعشاب ونقط",      inStock:true,  img:"konjac-drops.webp", desc:"نقط أعشاب Konjac من Herbal Kings، عبوة 30 مل. تُستخدم حسب الإرشادات المكتوبة على العبوة.", stock:3},
+  {name:"كريم كونجاك للجسم",          unit:"وحدة",  price:100, cat:"كريمات",          inStock:true,  img:"konjac-cream.webp", desc:"كريم تجميلي للجسم Konjac من Herbal Kings بخلاصة حبوب البن مع الكافيين والصبار والشاي الأخضر وفيتامين E. للاستخدام الخارجي فقط، 150 مل.", stock:1},
+  {name:"كريم ماكس فيلر",             unit:"وحدة",  price:100, cat:"كريمات",          inStock:true,  img:"max-filler.webp", desc:"كريم تجميلي Max Filler من Paxtone بالكولاجين وحمض الهيالورونيك وفيتامين C وE لترطيب وتنعيم البشرة. 100 مل، للاستخدام الخارجي.", stock:1},
 ];
 /* ===================== */
 
@@ -224,7 +277,7 @@ function cardHTML(p, showRank){
     : `أهلاً ${STORE_NAME} 👋\nعايز أحجز: ${p.name} (لما يتوفر)`;
   const medal = ["🥇","🥈","🥉"][p.best-1] || "⭐";
   const rank = p.best ? (showRank ? `<span class="rank medal">${medal}</span>` : `<span class="rank">الأكثر مبيعًا</span>`) : "";
-  const showBadge = !showRank || !p.inStock;
+  const showBadge = !p.inStock || (!showRank && !p.best);
   return `
     <article class="card">
       <div class="pic">
@@ -234,7 +287,9 @@ function cardHTML(p, showRank){
       </div>
       <div class="body">
         <h3 class="name">${esc(p.name)}</h3>
+        ${p.desc ? `<p class="desc">${esc(p.desc)}</p>${p.desc.length>70?'<button class="more" type="button">اقرأ المزيد</button>':''}` : ""}
         <span class="unit">السعر لكل ${esc(p.unit)}</span>
+        ${p.inStock && p.stock!=null && p.stock<=2 ? `<span class="low">🔥 باقي ${fmt(p.stock)} بس</span>` : ""}
         <div class="price">${fmt(p.price)} <small>ج.م</small></div>
         <div class="actions">
           <a class="btn btn-wa" href="${waLink(msg)}" target="_blank" rel="noopener">${WA_ICON}${p.inStock?"اطلب":"احجزه"}<span class="long"> على واتساب</span></a>
@@ -256,30 +311,59 @@ function renderGrid(){
   renderBest();
 }
 
+const HAS_PAY = !!(INSTAPAY || VFCASH);
+const PAY_NAMES = {cod:"كاش عند الاستلام", insta:"إنستاباي", vf:"فودافون كاش"};
+let pay = "cod";
+function payHTML(){
+  if(!HAS_PAY) return "";
+  const opt=(v,label)=>`<button type="button" class="po ${pay===v?"on":""}" data-pay="${v}">${label}</button>`;
+  let box="";
+  if(pay==="insta") box=`<div class="pbox">حوّل الإجمالي على إنستاباي (رقم الموبايل):<div class="acc"><b dir="ltr">${esc(INSTAPAY)}</b><button type="button" class="cp" data-copy="${esc(INSTAPAY)}">نسخ</button></div>${INSTAPAY_LINK?`<a class="plink" href="${esc(INSTAPAY_LINK)}" target="_blank" rel="noopener">افتح إنستاباي وادفع ↗</a>`:""}<small>وبعد التحويل ابعت سكرين على واتساب مع طلبك.</small></div>`;
+  if(pay==="vf") box=`<div class="pbox">حوّل الإجمالي على فودافون كاش:<div class="acc"><b dir="ltr">${esc(VFCASH)}</b><button type="button" class="cp" data-copy="${esc(VFCASH)}">نسخ</button></div><small>وبعد التحويل ابعت سكرين على واتساب مع طلبك.</small></div>`;
+  return `<div class="pay"><div class="pt">طريقة الدفع</div><div class="pos">${opt("cod","💵 كاش عند الاستلام")}${INSTAPAY?opt("insta","إنستاباي"):""}${VFCASH?opt("vf","فودافون كاش"):""}</div>${box}</div>`;
+}
 function renderCart(){
   const el = document.getElementById("cart");
   document.body.classList.toggle("has-cart", cart.size>0);
   if(!cart.size){ el.classList.remove("show","open"); return; }
   let total = 0, count = 0; const lines = [];
   cart.forEach((q,i)=>{ const p=PRODUCTS[i]; total+=p.price*q; count+=q; lines.push({p,q,i}); });
-  document.getElementById("cartTotal").textContent = `${fmt(count)} قطعة • ${fmt(total)} ج.م`;
-  document.getElementById("cartList").textContent = "تعديل الكميات";
+  const hasOff = DISCOUNT_PCT>0 && total>=DISCOUNT_MIN;
+  const off = hasOff ? Math.round(total*DISCOUNT_PCT/100) : 0;
+  const final = total - off;
+  document.getElementById("cartTotal").innerHTML = hasOff
+    ? `${fmt(count)} قطعة • ${fmt(final)} ج.م <s>${fmt(total)}</s>`
+    : `${fmt(count)} قطعة • ${fmt(total)} ج.م`;
+  const hasGift = GIFT_MIN>0 && total>=GIFT_MIN;
+  let note;
+  if(hasOff) note = `<span class="off">🎉 خصم ${fmt(DISCOUNT_PCT)}٪ (وفّرت ${fmt(off)} ج.م)${hasGift?" + 🎁 هدية":""}</span>`;
+  else if(hasGift) note = `<span class="off">🎁 ${GIFT_NAME} هدية</span>${DISCOUNT_PCT>0?` • <span class="near">زوّد ${fmt(DISCOUNT_MIN-total)} ج.م وخد خصم ${fmt(DISCOUNT_PCT)}٪</span>`:""}`;
+  else if(GIFT_MIN>0) note = `<span class="near">زوّد ${fmt(GIFT_MIN-total)} ج.م وخد ${GIFT_NAME} هدية 🎁</span>`;
+  else if(DISCOUNT_PCT>0) note = `<span class="near">زوّد ${fmt(DISCOUNT_MIN-total)} ج.م وخد خصم ${fmt(DISCOUNT_PCT)}٪</span>`;
+  else note = "تعديل الكميات";
+  document.getElementById("cartList").innerHTML = note + `<span class="hint"> • ${HAS_PAY?"الكميات والدفع":"تعديل الكميات"} ▴</span>`;
   document.getElementById("items").innerHTML = lines.map(l=>`
     <div class="item">
       <div class="nm">${esc(l.p.name)}<small>${fmt(l.p.price)} ج.م × ${fmt(l.q)} = ${fmt(l.p.price*l.q)} ج.م</small></div>
-      <div class="qty"><button type="button" data-q="${l.i}" data-d="1">+</button><span>${fmt(l.q)}</span><button type="button" data-q="${l.i}" data-d="-1">−</button></div>
-    </div>`).join("");
+      <div class="qty"><button type="button" data-q="${l.i}" data-d="1" ${l.p.stock!=null&&l.q>=l.p.stock?"disabled":""}>+</button><span>${fmt(l.q)}</span><button type="button" data-q="${l.i}" data-d="-1">−</button></div>
+    </div>`).join("") + payHTML();
   const msg = `أهلاً ${STORE_NAME} 👋\nعايز أطلب:\n` +
     lines.map(l=>`• ${l.p.name} × ${l.q} = ${l.p.price*l.q} ج.م`).join("\n") +
-    `\nالإجمالي: ${total} ج.م`;
+    (hasOff ? `\nالإجمالي قبل الخصم: ${total} ج.م\nخصم ${DISCOUNT_PCT}%: -${off} ج.م\nالإجمالي بعد الخصم: ${final} ج.م` : `\nالإجمالي: ${total} ج.م`) +
+    (hasGift ? `\n🎁 الهدية: ${GIFT_NAME} (هحدد اختياري)` : "") +
+    (HAS_PAY ? `\n💳 طريقة الدفع: ${PAY_NAMES[pay]}` + (pay!=="cod" ? " (هبعت سكرين التحويل)" : "") : "");
   document.getElementById("cartBtn").href = waLink(msg);
   el.classList.add("show");
 }
 
 document.getElementById("sumToggle").addEventListener("click", ()=> document.getElementById("cart").classList.toggle("open"));
 document.getElementById("items").addEventListener("click", e=>{
+  const po = e.target.closest("[data-pay]"); if(po){ pay = po.dataset.pay; renderCart(); return; }
+  const cp = e.target.closest("[data-copy]");
+  if(cp){ try{ navigator.clipboard.writeText(cp.dataset.copy).then(()=>{cp.textContent="اتنسخ ✓";},()=>{}); }catch(_){} return; }
   const b = e.target.closest("[data-q]"); if(!b) return;
-  const i = +b.dataset.q, q = (cart.get(i)||0) + (+b.dataset.d);
+  const i = +b.dataset.q, q = (cart.get(i)||0) + (+b.dataset.d), s = PRODUCTS[i].stock;
+  if(s!=null && q>s) return;
   q>0 ? cart.set(i,q) : cart.delete(i);
   renderGrid(); renderCart();
 });
@@ -294,13 +378,22 @@ document.querySelector("main").addEventListener("click", e=>{
   cart.has(i) ? cart.delete(i) : cart.set(i,1);
   renderGrid(); renderCart();
 });
+document.querySelector("main").addEventListener("click", e=>{
+  const m = e.target.closest(".more"); if(!m) return;
+  const d = m.previousElementSibling; const o = d.classList.toggle("open");
+  m.textContent = o ? "أقل" : "اقرأ المزيد";
+});
 document.getElementById("clearCart").addEventListener("click", ()=>{ cart.clear(); renderGrid(); renderCart(); });
 
-document.getElementById("cartBtn").innerHTML = WA_ICON + "اطلب السلة على واتساب";
+document.getElementById("cartBtn").innerHTML = WA_ICON + "اطلب الآن";
 const ask = document.getElementById("askBtn");
 ask.innerHTML = WA_ICON + "كلمنا على واتساب";
 ask.href = waLink(`أهلاً ${STORE_NAME} 👋\nعندي استفسار عن المنتجات`);
 document.getElementById("waText").textContent = "0" + WHATSAPP_NUMBER.slice(2);
+{ const parts=[];
+  if(GIFT_MIN>0) parts.push(`<span class="pi">🎁 ${GIFT_NAME} <b>هدية</b> لما توصل لمشتريات بقيمة ${fmt(GIFT_MIN)} جنيه</span>`);
+  if(DISCOUNT_PCT>0) parts.push(`<span class="pi">عرض خاص: خصم <b>${fmt(DISCOUNT_PCT)}٪</b> لما الأوردر يوصل لـ ${fmt(DISCOUNT_MIN)} جنيه مشتريات</span>`);
+  document.getElementById("promo").innerHTML = parts.join(' <span class="sep">•</span> '); }
 const fab = document.getElementById("fab");
 fab.innerHTML = WA_ICON;
 fab.href = waLink(`أهلاً ${STORE_NAME} 👋\nعندي استفسار عن المنتجات`);
@@ -332,14 +425,16 @@ function rowsToProducts(rows){
   const col = (...names)=> head.findIndex(h=>names.includes(h));
   const iName=col("المنتج","اسم المنتج","name"), iUnit=col("الوحدة","unit"), iPrice=col("السعر","price"),
         iCat=col("التصنيف","cat"), iStock=col("متوفر","inStock"), iImg=col("الصورة","img"),
-        iBest=col("الأكثر مبيعًا","الأكثر مبيعا","best"), iShow=col("يظهر في الموقع","show");
+        iBest=col("الأكثر مبيعًا","الأكثر مبيعا","best"), iShow=col("يظهر في الموقع","show"),
+        iDesc=col("الوصف","desc"), iQty=col("المخزون","الكمية المتاحة","stock");
   if(iName<0||iPrice<0) throw new Error("columns");
   const g=(r,i)=> i<0 ? "" : (r[i]||"").trim();
   return rows.slice(1).filter(r=>g(r,iName) && !NO.includes(g(r,iShow).toLowerCase())).map(r=>({
     name:g(r,iName), unit:g(r,iUnit)||"وحدة", price:toNum(g(r,iPrice)),
     cat:g(r,iCat)||"منتجات أخرى",
-    inStock: !NO.includes(g(r,iStock).toLowerCase()),
-    img:g(r,iImg), best: toNum(g(r,iBest)) || 0,
+    stock: g(r,iQty)==="" ? null : toNum(g(r,iQty)),
+    inStock: !NO.includes(g(r,iStock).toLowerCase()) && (g(r,iQty)==="" || toNum(g(r,iQty))>0),
+    img:g(r,iImg), best: toNum(g(r,iBest)) || 0, desc:g(r,iDesc),
   }));
 }
 
