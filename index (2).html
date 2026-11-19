@@ -55,13 +55,17 @@ h1 span{color:var(--cyan)}
 .card{background:var(--card);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--line);transition:transform .15s, box-shadow .15s}
 .card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(157,10,91,.10)}
 .pic{aspect-ratio:1/1;background:linear-gradient(135deg,var(--soft),#e8f7fc);display:grid;place-items:center;position:relative}
-.pic img{width:100%;height:100%;object-fit:cover}
+.pic img{width:100%;height:100%;object-fit:contain;background:#fff}
 .pic svg{width:42%;height:42%}
 .badge{position:absolute;top:12px;right:12px;background:#fff;color:var(--plum);font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px}
 .badge.out{background:var(--pink);color:#fff}
 .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
 .name{font-weight:700;font-size:17px;margin:0}
 .unit{color:var(--muted);font-size:13px}
+.desc{margin:2px 0 0;color:#4d4552;font-size:13.5px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.desc.open{display:block}
+.more{background:none;border:0;padding:0;color:var(--plum);font:700 12.5px "Cairo";cursor:pointer;align-self:flex-start}
+.note{font-size:12.5px;color:var(--muted);max-width:640px;margin:0 auto 10px;line-height:1.7}
 .price{font-size:22px;font-weight:800;color:var(--plum);margin-top:auto}
 .price small{font-size:14px;font-weight:600}
 .actions{display:flex;gap:8px;margin-top:8px}
@@ -80,6 +84,9 @@ h1 span{color:var(--cyan)}
 .contact p{margin:0 0 14px;color:var(--muted)}
 .contact .btn{max-width:320px;margin:0 auto;padding:12px}
 .contact .num{display:block;margin-top:10px;font-weight:700;direction:ltr}
+.chan{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:var(--wa);color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:9px 20px;border-radius:999px;box-shadow:0 6px 16px rgba(31,168,85,.3)}
+.chan svg{width:20px;height:20px}
+.chan2{display:block;margin-top:14px;color:var(--wa);font-weight:700;text-decoration:none}
 
 .cart{position:fixed;inset:auto 0 0 0;background:#fff;border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.06);transform:translateY(110%);transition:transform .25s;z-index:10}
 .cart.show{transform:none}
@@ -96,6 +103,7 @@ h1 span{color:var(--cyan)}
   .body{padding:10px 10px 12px}
   .name{font-size:14.5px;line-height:1.45}
   .unit{font-size:12px}
+  .desc{font-size:12.5px;-webkit-line-clamp:3}
   .price{font-size:18px}
   .actions{gap:6px}
   .btn{padding:9px 6px;font-size:12.5px;gap:4px}
@@ -113,6 +121,12 @@ h1 span{color:var(--cyan)}
 .fab{position:fixed;left:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--wa);color:#fff;display:grid;place-items:center;box-shadow:0 6px 18px rgba(31,168,85,.4);z-index:9;transition:bottom .25s}
 .fab svg{width:30px;height:30px}
 body.has-cart .fab{bottom:96px}
+.cart-fab{position:fixed;left:18px;bottom:84px;width:56px;height:56px;border:0;border-radius:50%;background:var(--plum);color:#fff;display:grid;place-items:center;box-shadow:0 6px 18px rgba(157,10,91,.32);z-index:9;cursor:pointer;transition:bottom .25s,transform .2s}
+.cart-fab:hover{transform:translateY(-2px)}
+.cart-fab:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.cart-fab svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cart-fab-count{position:absolute;top:-5px;right:-7px;display:grid;place-items:center;min-width:23px;height:23px;padding:0 5px;border-radius:999px;background:var(--pink);color:#fff;font:800 12px "Cairo",sans-serif;border:2px solid #fff}
+body.has-cart .cart-fab{bottom:162px}
 .cart .sum{cursor:pointer}
 .cart .sum b::after{content:" ▴";font-size:13px;color:var(--muted)}
 .cart.open .sum b::after{content:" ▾"}
@@ -124,18 +138,94 @@ body.has-cart .fab{bottom:96px}
 .item .nm small{display:block;color:var(--muted);font-weight:400}
 .qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .qty button{width:34px;height:34px;border:0;background:#f7f3f5;font:700 18px "Cairo";cursor:pointer;color:var(--plum)}
+.qty button:disabled{opacity:.35;cursor:not-allowed}
+.low{color:#d4380d;font-size:12.5px;font-weight:700}
+.cart .sum .hint{color:var(--muted);font-weight:400}
+.pay{padding:12px 0 6px;border-top:1px solid var(--line)}
+.pay .pt{font-weight:700;font-size:14px;margin-bottom:8px}
+.pos{display:flex;gap:8px;flex-wrap:wrap}
+.po{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font:600 13.5px "Cairo";cursor:pointer}
+.po.on{background:var(--plum);border-color:var(--plum);color:#fff}
+.pbox{margin-top:10px;background:#fbf7f9;border:1px dashed #e6c9d7;border-radius:12px;padding:10px 12px;font-size:13.5px}
+.pbox .acc{display:flex;align-items:center;gap:10px;margin:6px 0}
+.pbox .acc b{font-size:16px}
+.cp{border:0;background:var(--cyan);color:#fff;border-radius:8px;padding:4px 12px;font:700 12.5px "Cairo";cursor:pointer}
+.plink{display:inline-block;margin:2px 0 6px;color:var(--plum);font-weight:700}
+.pbox small{display:block;color:var(--muted)}
 .qty span{min-width:30px;text-align:center;font-weight:700}
 .promo{background:linear-gradient(90deg,var(--plum),var(--pink));color:#fff;text-align:center;font-weight:700;font-size:15px;padding:9px 14px;line-height:1.5}
 .promo:empty{display:none}
+.promo .sep{opacity:.6;margin:0 6px}
+.promo .pi{display:inline-block}
+@media (max-width:560px){.promo{font-size:13.5px;padding:7px 10px}.promo .sep{display:none}.promo .pi{display:block}}
 .promo b{background:#fff;color:var(--plum);padding:1px 8px;border-radius:999px;margin:0 2px}
 .cart .sum .off{color:var(--wa);font-weight:700}
 .cart .sum .near{color:var(--pink);font-weight:700}
 .cart .sum div{white-space:normal}
 .cart .sum s{color:var(--muted);font-weight:400;font-size:14px}
 footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 30px}
+@media (max-width:560px){
+  .fab{width:48px;height:48px;left:12px;bottom:14px}
+  .fab svg{width:26px;height:26px}
+  body.has-cart .fab{bottom:88px}
+  .cart-fab{width:48px;height:48px;left:12px;bottom:72px}
+  .cart-fab svg{width:24px;height:24px}
+  body.has-cart .cart-fab{bottom:146px}
+}
+
+.deal-section,.pack-section,.bf-section{margin:24px 0;background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 8px 24px rgba(157,10,91,.05)}
+.deal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.deal-card{border:1px solid var(--line);border-radius:16px;padding:16px;background:linear-gradient(145deg,#fff,#fff9fc);display:flex;flex-direction:column;gap:6px}
+.deal-card h3{margin:0;color:var(--plum);font-size:17px}
+.deal-card p{margin:0;color:var(--muted);font-size:13.5px}
+.deal-price{font-weight:800;color:var(--plum);font-size:19px}
+.deal-save{font-size:12px;color:var(--wa);font-weight:700}
+.deal-card .btn{margin-top:auto;flex:none}
+.deal-card .btn:disabled{opacity:.5;cursor:not-allowed}
+.deal-rule{font-size:12px;color:var(--muted);margin:12px 2px 0}
+.pack-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:10px;margin:14px 0}
+.pack-option{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}
+.pack-option label{display:flex;align-items:center;gap:8px;flex:1;min-width:0;cursor:pointer}
+.pack-option .bn{font-weight:700;font-size:13px}
+.pack-option .bp{display:block;color:var(--muted);font-size:12px}
+.pack-qty{width:62px;border:1px solid var(--line);border-radius:8px;padding:6px;text-align:center;font:600 14px "Cairo"}
+.pack-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pack-controls .btn{flex:0 0 auto}
+.pack-msg{margin:0;color:var(--muted);font-size:13px}
+.pack-msg.error{color:#b42318}
+.bf-section{background:linear-gradient(125deg,#9d0a5b,#d02073);color:#fff;border:0;text-align:center;padding:26px 20px}
+.bf-section h2{color:#fff;margin:2px 0;font-size:26px}
+.bf-section p{margin:6px 0}
+.bf-rate{font-size:42px;font-weight:800;line-height:1.2}
+.bf-note{font-size:13px;opacity:.9}
+.bf-section .btn{display:inline-flex;background:#fff;color:var(--plum);margin-top:10px}
+.bf-section.at-top{margin:0;border-radius:0;box-shadow:none;padding:10px 18px}
+.bf-compact{max-width:1100px;margin:auto;display:flex;justify-content:center;align-items:center;gap:10px 16px;flex-wrap:wrap}
+.bf-section.at-top .bf-rate{font-size:22px;line-height:1.3}
+.bf-section.at-top .bf-note{font-size:14px;font-weight:700}
+.bf-compact #bfMessage{margin:0;font-size:13px;opacity:.94}
+.reserve-pane{margin-top:12px;padding:13px;background:#fff8fc;border:1px solid #f1cdda;border-radius:14px}
+.reserve-pane h3{color:var(--plum);font-size:15px;margin:0 0 4px}
+.reserve-pane p{font-size:12px;margin:0 0 9px;color:var(--muted)}
+.reserve-fields{display:flex;flex-wrap:wrap;align-items:end;gap:9px;margin:8px 0}
+.reserve-fields label{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;min-width:130px;flex:1}
+.reserve-fields input{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px;font:600 14px "Cairo";background:#fff;color:var(--ink)}
+.reserve-pane .btn{display:inline-flex;flex:none;margin-top:5px}
+.reserve-pane .error{color:#b42318;font-weight:700}
+@media(max-width:560px){.deal-section,.pack-section,.bf-section{padding:15px 12px;border-radius:18px}.deal-grid,.pack-options{grid-template-columns:1fr}.bf-section h2{font-size:22px}.bf-rate{font-size:36px}}
+@media(max-width:560px){.bf-section.at-top{border-radius:0;padding:9px 10px}.bf-compact{gap:3px 10px}.bf-section.at-top .bf-rate{font-size:19px}.bf-compact #bfMessage{width:100%;font-size:12px}}
+
 </style>
 </head>
 <body>
+
+<section class="bf-section at-top" id="whiteFriday">
+  <div class="bf-compact">
+    <span class="bf-note">✨ وايت فرايدي</span>
+    <strong class="bf-rate">خصم 15٪</strong>
+    <span id="bfMessage"></span>
+  </div>
+</section>
 
 <div class="promo" id="promo"></div>
 
@@ -145,6 +235,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 30px}
     <h1>NutriNest <span>–</span> علاج التغذية</h1>
     <p class="tag">منتجات تغذية وعناية مختارة — اختار اللي يناسبك واطلبه في ثواني على واتساب.</p>
     <div class="how"><span>١. اختار المنتج</span><span>٢. اضغط «اطلب على واتساب»</span><span>٣. هنأكد معاك الطلب والتوصيل</span></div>
+    <a class="chan" href="https://whatsapp.com/channel/0029VbEfb77JJhzUEXhQfB2a" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4a1 1 0 0 0 1 1h2l5 4V5L6 9H4a1 1 0 0 0-1 1Zm13.5 2A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4ZM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6Z"/></svg>تابع قناتنا على واتساب للعروض الجديدة</a>
   </div>
 </header>
 
@@ -153,6 +244,21 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 30px}
     <div class="sec-head"><h2>⭐ الأكثر مبيعًا</h2><span>المنتجات اللي عملاؤنا بيطلبوها أكتر</span></div>
     <div class="best-row" id="bestRow"></div>
   </section>
+
+  <section class="deal-section" id="offers">
+    <div class="sec-head"><h2>🎁 خصومات</h2><span>الخصومات بتتحسب تلقائيًا في السلة</span></div>
+    <div class="deal-grid" id="dealCards"></div>
+    <p class="pack-msg" id="offerMsg" aria-live="polite"></p>
+    <p class="deal-rule">عند وصول قيمة المنتجات إلى 1000 جنيه، يطبق خصم الطلب بدل خصومات العروض. حد الهدية والخصم يُحسب قبل الخصم.</p>
+  </section>
+
+  <section class="pack-section" id="buildPack">
+    <div class="sec-head"><h2>كوّني باقتك</h2><span>اختاري المنتجات اللي حابة تضيفيها للسلة</span></div>
+    <p class="deal-rule">اختاري الكميات، وبعدها أضيفي باقتك. السلة هتوضح الخصم والهدية والمبلغ النهائي.</p>
+    <div class="pack-options" id="packOptions"></div>
+    <div class="pack-controls"><button class="btn btn-wa" id="addPackToCart" type="button">ضيفي الباقة للسلة</button><p class="pack-msg" id="packMsg" aria-live="polite"></p></div>
+  </section>
+
   <div class="sec-head all-head"><h2>كل المنتجات</h2></div>
   <div class="filters" id="filters"></div>
   <div class="grid" id="grid"></div>
@@ -162,12 +268,19 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 30px}
     <p>كلمنا على واتساب وهنساعدك تختار المنتج المناسب ليك.</p>
     <a class="btn btn-wa" id="askBtn" href="#" target="_blank" rel="noopener"></a>
     <span class="num" id="waText"></span>
+    <a class="chan2" href="https://whatsapp.com/channel/0029VbEfb77JJhzUEXhQfB2a" target="_blank" rel="noopener">📢 تابع قناة NutriNest على واتساب، ورقمك مش بيظهر لحد</a>
   </section>
 </main>
 
-<footer>© <span id="yr"></span> NutriNest – علاج التغذية • الأسعار بالجنيه المصري</footer>
+<footer>
+  <p class="note">المنتجات مكملات غذائية ومستحضرات تجميل، ومش بديل عن استشارة الطبيب. غير مناسبة للحوامل والمرضعات وأصحاب الأمراض المزمنة إلا بعد استشارة الطبيب.</p>
+ © <span id="yr"></span> NutriNest – علاج التغذية • الأسعار بالجنيه المصري</footer>
 
 <a class="fab" id="fab" href="#" target="_blank" rel="noopener" aria-label="كلمنا على واتساب"></a>
+<button class="cart-fab" id="cartFab" type="button" aria-label="السلة فاضية، اختار منتجات" title="افتح سلة المشتريات">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1"/><circle cx="19" cy="20" r="1"/><path d="M2 3h2l2.7 12.1a2 2 0 0 0 2 1.6h9.5a2 2 0 0 0 2-1.6L22 7H5"/></svg>
+  <span class="cart-fab-count" id="cartFabCount" aria-hidden="true">0</span>
+</button>
 
 <div class="cart" id="cart">
   <div class="wrap items" id="items"></div>
@@ -183,27 +296,41 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 30px}
 const WHATSAPP_NUMBER = "201228779295";
 const STORE_NAME = "NutriNest";
 
-/* لينك Google Sheet بعد «Publish to web» بصيغة CSV.
+/* لينك Google Sheet (تاب «المنتجات») بصيغة CSV.
    لو فاضي أو الشيت مفتحش، الصفحة بتستخدم القايمة اللي تحت كنسخة احتياطية. */
-const SHEET_CSV_URL = "";
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1UgSTsBCgpOLtAYGZxuALx4oB48jqisPGAIgHd_ch86E/gviz/tq?tqx=out:csv&sheet=%D8%A7%D9%84%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA";
 
 /* العرض: نسبة الخصم والحد الأدنى للطلب (اكتب 0 في النسبة عشان تلغي العرض) */
-const DISCOUNT_PCT = 15;
+const REGULAR_DISCOUNT_PCT = 10;
+const WHITE_FRIDAY_DISCOUNT_PCT = 15;
+const WHITE_FRIDAY_DATE = "2026-11-27";
+const todayKey = (()=>{
+  const parts = new Intl.DateTimeFormat("en-US",{timeZone:"Africa/Cairo",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
+  const pick = key => parts.find(p=>p.type===key).value;
+  return `${pick("year")}-${pick("month")}-${pick("day")}`;
+})();
+const DISCOUNT_PCT = todayKey===WHITE_FRIDAY_DATE ? WHITE_FRIDAY_DISCOUNT_PCT : REGULAR_DISCOUNT_PCT;
 const DISCOUNT_MIN = 1000;
+const GIFT_MIN = 600;        // اكتب 0 عشان تلغي الهدية
+const GIFT_NAME = "أعشاب أو نقط";
+
+/* الدفع: سيبهم فاضيين لو مش عايز تعرضهم (الكاش عند الاستلام دايمًا موجود) */
+const INSTAPAY = "01099921514";         // عنوان إنستاباي، مثال: nutrinest@instapay
+const INSTAPAY_LINK = "https://ipn.eg/S/a.ramadan.777/instapay/7miURe";    // لينك الدفع من تطبيق إنستاباي (اختياري)، مثال: https://ipn.eg/S/nutrinest/instapay/xxxx
+const VFCASH = "01099921514";           // رقم محفظة فودافون كاش، مثال: 01012345678
 
 /* نسخة احتياطية من المنتجات (بتظهر لو الشيت مش متاح).
    inStock:false = يظهر «نفد مؤقتًا».  best:1 / 2 / 3 = يظهر في «الأكثر مبيعًا» بالترتيب ده (امسحها عشان تشيله).  img: اسم ملف الصورة لما ترفعها (مثلاً "green-coffee.jpg") */
 let PRODUCTS = [
-  {name:"قهوة خضرا سوبر جرين كوفي", unit:"وحدة",  price:180, cat:"قهوة",            inStock:true,  img:"", best:1},
-  {name:"قهوة بيضة نسكافيه",          unit:"وحدة",  price:220, cat:"قهوة",            inStock:true,  img:""},
-  {name:"قهوة كونجاك",                unit:"وحدة",  price:220, cat:"قهوة",            inStock:true,  img:""},
-  {name:"براند كاب بلس",              unit:"شريط",  price:130, cat:"برشام وكبسولات",  inStock:false, img:"", best:3},
-  {name:"برشام اكسبريس الأصفر",       unit:"شريط",  price:120, cat:"برشام وكبسولات",  inStock:true,  img:"", best:2},
-  {name:"أعشاب",                      unit:"علبة",  price:70,  cat:"أعشاب ونقط",      inStock:true,  img:""},
-  {name:"نقط",                        unit:"وحدة",  price:70,  cat:"أعشاب ونقط",      inStock:true,  img:""},
-  {name:"كريم كونجاك",                unit:"وحدة",  price:100, cat:"كريمات",          inStock:true,  img:""},
-  {name:"كريم ماكس فيلر",             unit:"وحدة",  price:100, cat:"كريمات",          inStock:true,  img:""},
-  {name:"أمبول جلسات",                unit:"أمبول", price:600, cat:"أمبولات",         inStock:true,  img:""},
+  {name:"قهوة خضرا سوبر جرين كوفي", unit:"وحدة",  price:180, cat:"قهوة",            inStock:true,  img:"super-green-coffee.webp", best:1, desc:"قهوة خضراء سريعة التحضير من 30 Green Coffee، بخلاصات عشبية مع الكروم والجنسنج. العلبة 30 كيس × 5 جم. الاستخدام: كيس واحد في 100 مل مية سخنة، كوباية في اليوم، مع نظام غذائي صحي.", stock:2},
+  {name:"قهوة ألترا جرين كوفي",       unit:"وحدة",  price:220, cat:"قهوة",            inStock:true,  img:"ultra-green-coffee.webp", desc:"قهوة خضراء Ultra Green Coffee غنية بالجارسينيا والألياف الطبيعية، في أكياس فردية سهلة التحضير. تُستخدم مع نظام غذائي صحي ونشاط بدني.", stock:3},
+  {name:"قهوة كونجاك دايت",           unit:"وحدة",  price:220, cat:"قهوة",            inStock:true,  img:"konjac-coffee.webp", desc:"قهوة دايت من Fettarm بخلاصة الكونجاك. العلبة 30 كيس × 5 جم. كيس واحد في اليوم في مية سخنة بدل قهوتك المعتادة.", stock:3},
+  {name:"براند كاب بلس",              unit:"شريط",  price:130, cat:"برشام وكبسولات",  inStock:false, img:"brand-cap-plus.webp", best:3, desc:"كبسولات أعشاب Brand Cap Plus من Fettarm. على كل علبة كود تقدر تتأكد بيه إن المنتج أصلي من موقع الشركة. تُستخدم حسب الإرشادات المكتوبة على العبوة.", stock:0},
+  {name:"كبسولات إكسبريس سليم",       unit:"شريط",  price:120, cat:"برشام وكبسولات",  inStock:true,  img:"xpress-slim.webp", best:2, desc:"كبسولات Xpress Slim من Golden Line في علبة معدنية، 36 كبسولة × 500 مجم. تُستخدم حسب الإرشادات المكتوبة على العبوة.", stock:6},
+  {name:"شاي أعشاب كونجاك",           unit:"علبة",  price:70,  cat:"أعشاب ونقط",      inStock:true,  img:"konjac-tea.webp", desc:"شاي أعشاب Konjac من Herbal Kings. العلبة 30 فتلة × 2 جم. فتلة واحدة في كوباية مية سخنة.", stock:5},
+  {name:"نقط أعشاب كونجاك",           unit:"وحدة",  price:70,  cat:"أعشاب ونقط",      inStock:true,  img:"konjac-drops.webp", desc:"نقط أعشاب Konjac من Herbal Kings، عبوة 30 مل. تُستخدم حسب الإرشادات المكتوبة على العبوة.", stock:3},
+  {name:"كريم كونجاك للجسم",          unit:"وحدة",  price:100, cat:"كريمات",          inStock:true,  img:"konjac-cream.webp", desc:"كريم تجميلي للجسم Konjac من Herbal Kings بخلاصة حبوب البن مع الكافيين والصبار والشاي الأخضر وفيتامين E. للاستخدام الخارجي فقط، 150 مل.", stock:1},
+  {name:"كريم ماكس فيلر",             unit:"وحدة",  price:100, cat:"كريمات",          inStock:true,  img:"max-filler.webp", desc:"كريم تجميلي Max Filler من Paxtone بالكولاجين وحمض الهيالورونيك وفيتامين C وE لترطيب وتنعيم البشرة. 100 مل، للاستخدام الخارجي.", stock:1},
 ];
 /* ===================== */
 
@@ -237,7 +364,7 @@ function cardHTML(p, showRank){
     : `أهلاً ${STORE_NAME} 👋\nعايز أحجز: ${p.name} (لما يتوفر)`;
   const medal = ["🥇","🥈","🥉"][p.best-1] || "⭐";
   const rank = p.best ? (showRank ? `<span class="rank medal">${medal}</span>` : `<span class="rank">الأكثر مبيعًا</span>`) : "";
-  const showBadge = !showRank || !p.inStock;
+  const showBadge = !p.inStock || (!showRank && !p.best);
   return `
     <article class="card">
       <div class="pic">
@@ -247,7 +374,9 @@ function cardHTML(p, showRank){
       </div>
       <div class="body">
         <h3 class="name">${esc(p.name)}</h3>
+        ${p.desc ? `<p class="desc">${esc(p.desc)}</p>${p.desc.length>70?'<button class="more" type="button">اقرأ المزيد</button>':''}` : ""}
         <span class="unit">السعر لكل ${esc(p.unit)}</span>
+        ${p.inStock && p.stock!=null && p.stock<=2 ? `<span class="low">🔥 باقي ${fmt(p.stock)} بس</span>` : ""}
         <div class="price">${fmt(p.price)} <small>ج.م</small></div>
         <div class="actions">
           <a class="btn btn-wa" href="${waLink(msg)}" target="_blank" rel="noopener">${WA_ICON}${p.inStock?"اطلب":"احجزه"}<span class="long"> على واتساب</span></a>
@@ -269,37 +398,216 @@ function renderGrid(){
   renderBest();
 }
 
+const HAS_PAY = !!(INSTAPAY || VFCASH);
+const PAY_NAMES = {cod:"كاش عند الاستلام", insta:"إنستاباي", vf:"فودافون كاش"};
+let pay = "cod";
+function payHTML(){
+  if(!HAS_PAY) return "";
+  const opt=(v,label)=>`<button type="button" class="po ${pay===v?"on":""}" data-pay="${v}">${label}</button>`;
+  let box="";
+  if(pay==="insta") box=`<div class="pbox">حوّل الإجمالي على إنستاباي (رقم الموبايل):<div class="acc"><b dir="ltr">${esc(INSTAPAY)}</b><button type="button" class="cp" data-copy="${esc(INSTAPAY)}">نسخ</button></div>${INSTAPAY_LINK?`<a class="plink" href="${esc(INSTAPAY_LINK)}" target="_blank" rel="noopener">افتح إنستاباي وادفع ↗</a>`:""}<small>وبعد التحويل ابعت سكرين على واتساب مع طلبك.</small></div>`;
+  if(pay==="vf") box=`<div class="pbox">حوّل الإجمالي على فودافون كاش:<div class="acc"><b dir="ltr">${esc(VFCASH)}</b><button type="button" class="cp" data-copy="${esc(VFCASH)}">نسخ</button></div><small>وبعد التحويل ابعت سكرين على واتساب مع طلبك.</small></div>`;
+  return `<div class="pay"><div class="pt">طريقة الدفع</div><div class="pos">${opt("cod","💵 كاش عند الاستلام")}${INSTAPAY?opt("insta","إنستاباي"):""}${VFCASH?opt("vf","فودافون كاش"):""}</div>${box}</div>`;
+}
+let pickupDate = "";
+let pickupTime = "";
+let currentOrderMessage = "";
+const pickupDateValid = d => /^\d{4}-\d{2}-\d{2}$/.test(d) && d>=todayKey && !Number.isNaN(new Date(`${d}T12:00:00+02:00`).getTime());
+function reserveMessage(){
+  if(!pickupDateValid(pickupDate)) return "";
+  const [year,month,day]=pickupDate.split("-");
+  return currentOrderMessage.replace("عايز أطلب:","عايز أحجز الطلب ده وأستلمه لاحقًا:") +
+    `\n📅 يوم الاستلام المطلوب: ${day}/${month}/${year}` +
+    (pickupTime?`\n🕒 الوقت المناسب: ${pickupTime}`:"") +
+    "\nمن فضلك أكدلي توافر المنتجات وموعد الاستلام. الحجز يتأكد بعد رد المتجر.";
+}
+function reservationHTML(){
+  return `<section class="reserve-pane" id="reservePane">
+    <h3>📦 احجز طلبك واستلمه بعدين</h3>
+    <p>اختار موعد الاستلام، وهنراجع التوافر ونأكدلك الحجز على واتساب.</p>
+    <div class="reserve-fields">
+      <label for="pickupDate">يوم الاستلام المطلوب <input id="pickupDate" type="date" min="${todayKey}" value="${pickupDateValid(pickupDate)?pickupDate:""}" required></label>
+      <label for="pickupTime">الوقت المناسب (اختياري) <input id="pickupTime" type="time" value="${pickupTime}"></label>
+    </div>
+    <a class="btn btn-wa" id="reserveBtn" href="#" target="_blank" rel="noopener">احجز على واتساب</a>
+    <p id="reserveError" class="error" aria-live="polite"></p>
+    <small>الحجز مش مؤكد إلا لما نرد عليك ونأكد توافر المنتجات وميعاد الاستلام.</small>
+  </section>`;
+}
+const cappedOfferDiscount = total => Math.min(20,Math.max(0,Math.round(total*.15)));
+function packDiscountBreakdown(subtotal){
+  if(subtotal>=DISCOUNT_MIN) return {discount:0,lines:[]};
+  let discount=0; const lines=[];
+  const coffeeUnits=PRODUCTS.flatMap((p,i)=>p.cat==="قهوة"?Array(cart.get(i)||0).fill(p.price):[]).sort((a,b)=>b-a);
+  const coffeePairs=Math.floor(coffeeUnits.length/2);
+  let coffeeOff=0;
+  for(let n=0;n<coffeePairs*2;n+=2) coffeeOff+=Math.round((coffeeUnits[n]+coffeeUnits[n+1])*.10);
+  if(coffeeOff>0){discount+=coffeeOff;lines.push(`عرض القهوة (${coffeePairs} زوج): -${coffeeOff} ج.م`);}
+
+  const herbal=PRODUCTS.map((p,i)=>({p,i})).filter(x=>x.p.cat==="أعشاب ونقط");
+  const tea=herbal.find(x=>/شاي/.test(x.p.name))||herbal[0];
+  const drops=herbal.find(x=>/نقط/.test(x.p.name))||herbal.find(x=>x!==tea);
+  if(tea&&drops){
+    const pairs=Math.min(cart.get(tea.i)||0,cart.get(drops.i)||0);
+    const off=pairs*cappedOfferDiscount(tea.p.price+drops.p.price);
+    if(off>0){discount+=off;lines.push(`عرض الشاي والنقط (${pairs}): -${off} ج.م`);}
+  }
+
+  const creams=PRODUCTS.map((p,i)=>({p,i})).filter(x=>x.p.cat==="كريمات");
+  if(creams.length>=2){
+    const pairs=Math.min(cart.get(creams[0].i)||0,cart.get(creams[1].i)||0);
+    const off=pairs*cappedOfferDiscount(creams[0].p.price+creams[1].p.price);
+    if(off>0){discount+=off;lines.push(`عرض العناية (${pairs}): -${off} ج.م`);}
+  }
+
+  const xpress=PRODUCTS.map((p,i)=>({p,i})).find(x=>/إكسبريس|xpress/i.test(x.p.name));
+  if(xpress){
+    const pairs=Math.floor((cart.get(xpress.i)||0)/2);
+    const off=pairs*Math.max(0,2*xpress.p.price-220);
+    if(off>0){discount+=off;lines.push(`عرض البرشام (${pairs}): -${off} ج.م`);}
+  }
+  return {discount,lines};
+}
+
+function renderOffers(){
+  const cards=[];
+  const coffees=PRODUCTS.filter(p=>p.cat==="قهوة");
+  if(coffees.length) cards.push(`<article class="deal-card"><h3>عرض القهوة الخضراء</h3><p>اختاري أي عبوتين من القهوة، والخصم 10٪ على كل زوج.</p><span class="deal-price">خصم 10٪</span><span class="deal-save">يظهر السعر بعد اختيار القهوة</span><a class="btn" href="#buildPack" data-offer="coffee">اختاري القهوة</a></article>`);
+  const herbal=PRODUCTS.filter(p=>p.cat==="أعشاب ونقط");
+  const tea=herbal.find(p=>/شاي/.test(p.name))||herbal[0];
+  const drops=herbal.find(p=>/نقط/.test(p.name))||herbal.find(p=>p!==tea);
+  if(tea&&drops){const regular=tea.price+drops.price,off=cappedOfferDiscount(regular),available=tea.inStock&&drops.inStock;cards.push(`<article class="deal-card"><h3>عرض الأعشاب والنقط</h3><p>${esc(tea.name)} + ${esc(drops.name)}</p><span class="deal-price">${fmt(regular-off)} ${off?`بدل ${fmt(regular)} `:""}ج.م</span><span class="deal-save">${off?"وفّري 15٪ بحد أقصى 20 جنيه":"السعر الحالي للمنتجين"}</span><button class="btn btn-wa" type="button" data-offer="herbs" ${available?"":"disabled"}>${available?"ضيفي العرض للسلة":"غير متوفر حاليًا"}</button></article>`);}
+  const creams=PRODUCTS.filter(p=>p.cat==="كريمات");
+  if(creams.length>=2){const regular=creams[0].price+creams[1].price,off=cappedOfferDiscount(regular),available=creams[0].inStock&&creams[1].inStock;cards.push(`<article class="deal-card"><h3>عرض العناية</h3><p>${esc(creams[0].name)} + ${esc(creams[1].name)}</p><span class="deal-price">${fmt(regular-off)} ${off?`بدل ${fmt(regular)} `:""}ج.م</span><span class="deal-save">${off?"وفّري 15٪ بحد أقصى 20 جنيه":"السعر الحالي للمنتجين"}</span><button class="btn btn-wa" type="button" data-offer="care" ${available?"":"disabled"}>${available?"ضيفي العرض للسلة":"غير متوفر حاليًا"}</button></article>`);}
+  const xpress=PRODUCTS.find(p=>/إكسبريس|xpress/i.test(p.name));
+  if(xpress){const regular=xpress.price*2,off=Math.max(0,regular-220),available=xpress.inStock&&(xpress.stock==null||xpress.stock>=2);cards.push(`<article class="deal-card"><h3>عرض البرشام</h3><p>اشتري شريتين من ${esc(xpress.name)}</p><span class="deal-price">${fmt(regular-off)} ${off?`بدل ${fmt(regular)} `:""}ج.م</span><span class="deal-save">${off?`وفّري ${fmt(off)} جنيه`:"السعر الحالي للشريتين"}</span><button class="btn btn-wa" type="button" data-offer="xpress" ${available?"":"disabled"}>${available?"ضيفي العرض للسلة":"غير متوفر حاليًا"}</button></article>`);}
+  document.getElementById("dealCards").innerHTML=cards.join("");
+}
+
+function renderPackChoices(){
+  const options=PRODUCTS.map((p,i)=>({p,i})).filter(x=>x.p.inStock);
+  document.getElementById("packOptions").innerHTML=options.map(({p,i})=>`<div class="pack-option"><label><input type="checkbox" data-pack-check="${i}"><span><span class="bn">${esc(p.name)}</span><span class="bp">${fmt(p.price)} ج.م لكل ${esc(p.unit)}</span></span></label><input class="pack-qty" type="number" min="1" max="${Math.min(50,p.stock??50)}" value="1" data-pack-qty="${i}" aria-label="الكمية من ${esc(p.name)}"></div>`).join("");
+}
+
+function offerProducts(kind){
+  const find = fn => PRODUCTS.findIndex(fn);
+  if(kind==="herbs"){
+    const tea=find(p=>p.cat==="أعشاب ونقط"&&/شاي/.test(p.name));
+    const drops=find(p=>p.cat==="أعشاب ونقط"&&/نقط/.test(p.name));
+    return tea>=0&&drops>=0?[{i:tea,q:1},{i:drops,q:1}]:[];
+  }
+  if(kind==="care") return PRODUCTS.map((p,i)=>({p,i})).filter(x=>x.p.cat==="كريمات").slice(0,2).map(x=>({i:x.i,q:1}));
+  if(kind==="xpress"){
+    const i=find(p=>/إكسبريس|xpress/i.test(p.name));
+    return i>=0?[{i,q:2}]:[];
+  }
+  return [];
+}
+
+function addItems(items){
+  if(!items.length) return "المنتجات المطلوبة مش متاحة حاليًا.";
+  for(const {i,q} of items){
+    const p=PRODUCTS[i];
+    if(!p?.inStock||p.stock!=null&&(cart.get(i)||0)+q>p.stock) return `الكمية المطلوبة من ${p.name} أكبر من المتاح.`;
+  }
+  items.forEach(({i,q})=>cart.set(i,(cart.get(i)||0)+q));
+  renderGrid(); renderCart();
+  return "اتضافت المنتجات للسلة والخصم اتحسب تلقائيًا.";
+}
+
+function updateWhiteFridayMessage(){
+  const message=document.getElementById("bfMessage");
+  if(todayKey===WHITE_FRIDAY_DATE) message.textContent=`النهارده على طلبات ${fmt(DISCOUNT_MIN)} جنيه أو أكتر`;
+  else if(todayKey<WHITE_FRIDAY_DATE) message.textContent=`الجمعة 27 نوفمبر • للطلبات من ${fmt(DISCOUNT_MIN)} جنيه`;
+  else document.getElementById("whiteFriday").hidden=true;
+}
+
 function renderCart(){
   const el = document.getElementById("cart");
+  const itemCount=[...cart.values()].reduce((sum,q)=>sum+q,0);
+  document.getElementById("cartFabCount").textContent=fmt(itemCount);
+  document.getElementById("cartFab").setAttribute("aria-label",itemCount?`افتح السلة، فيها ${fmt(itemCount)} قطعة`:"السلة فاضية، اختار منتجات");
   document.body.classList.toggle("has-cart", cart.size>0);
   if(!cart.size){ el.classList.remove("show","open"); return; }
   let total = 0, count = 0; const lines = [];
   cart.forEach((q,i)=>{ const p=PRODUCTS[i]; total+=p.price*q; count+=q; lines.push({p,q,i}); });
   const hasOff = DISCOUNT_PCT>0 && total>=DISCOUNT_MIN;
-  const off = hasOff ? Math.round(total*DISCOUNT_PCT/100) : 0;
+  const packDeal=hasOff?{discount:0,lines:[]}:packDiscountBreakdown(total);
+  const off = hasOff ? Math.round(total*DISCOUNT_PCT/100) : packDeal.discount;
   const final = total - off;
-  document.getElementById("cartTotal").innerHTML = hasOff
+  const hasGift = GIFT_MIN>0 && total>=GIFT_MIN;
+  const anyOff=off>0;
+  document.getElementById("cartTotal").innerHTML = anyOff
     ? `${fmt(count)} قطعة • ${fmt(final)} ج.م <s>${fmt(total)}</s>`
     : `${fmt(count)} قطعة • ${fmt(total)} ج.م`;
-  document.getElementById("cartList").innerHTML = hasOff
-    ? `<span class="off">🎉 خصم ${fmt(DISCOUNT_PCT)}٪ • وفّرت ${fmt(off)} ج.م</span>`
-    : (DISCOUNT_PCT>0 ? `<span class="near">زوّد ${fmt(DISCOUNT_MIN-total)} ج.م وخد خصم ${fmt(DISCOUNT_PCT)}٪</span>` : "تعديل الكميات");
+  let note;
+  if(hasOff) note = `<span class="off">🎉 خصم ${fmt(DISCOUNT_PCT)}٪ (وفّرت ${fmt(off)} ج.م)${hasGift?" + 🎁 هدية":""}</span>`;
+  else {
+    const parts=[];
+    if(packDeal.discount) parts.push(`<span class="off">🏷️ خصم العروض ${fmt(packDeal.discount)} ج.م</span>`);
+    if(hasGift) parts.push(`<span class="off">🎁 ${GIFT_NAME} هدية</span>`);
+    else if(GIFT_MIN>0) parts.push(`<span class="near">زوّدي ${fmt(GIFT_MIN-total)} ج.م وخدي ${GIFT_NAME} هدية 🎁</span>`);
+    if(hasGift&&total<DISCOUNT_MIN) parts.push(`<span class="near">زوّدي ${fmt(DISCOUNT_MIN-total)} ج.م وخدي خصم ${fmt(DISCOUNT_PCT)}٪</span>`);
+    note=parts.join(" • ")||"تعديل الكميات";
+  }
+  document.getElementById("cartList").innerHTML = note + `<span class="hint"> • الكميات والدفع والحجز ▴</span>`;
   document.getElementById("items").innerHTML = lines.map(l=>`
     <div class="item">
       <div class="nm">${esc(l.p.name)}<small>${fmt(l.p.price)} ج.م × ${fmt(l.q)} = ${fmt(l.p.price*l.q)} ج.م</small></div>
-      <div class="qty"><button type="button" data-q="${l.i}" data-d="1">+</button><span>${fmt(l.q)}</span><button type="button" data-q="${l.i}" data-d="-1">−</button></div>
-    </div>`).join("");
+      <div class="qty"><button type="button" data-q="${l.i}" data-d="1" ${l.p.stock!=null&&l.q>=l.p.stock?"disabled":""}>+</button><span>${fmt(l.q)}</span><button type="button" data-q="${l.i}" data-d="-1">−</button></div>
+    </div>`).join("") + reservationHTML() + payHTML();
+  const discountMessage = hasOff
+    ? `\nالإجمالي قبل الخصم: ${total} ج.م\nخصم ${DISCOUNT_PCT}%: -${off} ج.م\nالإجمالي بعد الخصم: ${final} ج.م`
+    : packDeal.discount
+      ? `\nالإجمالي قبل الخصم: ${total} ج.م\n${packDeal.lines.join("\n")}\nإجمالي خصم العروض: -${off} ج.م\nالإجمالي بعد الخصم: ${final} ج.م`
+      : `\nالإجمالي: ${total} ج.م`;
   const msg = `أهلاً ${STORE_NAME} 👋\nعايز أطلب:\n` +
     lines.map(l=>`• ${l.p.name} × ${l.q} = ${l.p.price*l.q} ج.م`).join("\n") +
-    (hasOff ? `\nالإجمالي قبل الخصم: ${total} ج.م\nخصم ${DISCOUNT_PCT}%: -${off} ج.م\nالإجمالي بعد الخصم: ${final} ج.م` : `\nالإجمالي: ${total} ج.م`);
+    discountMessage +
+    (hasGift ? `\n🎁 الهدية: ${GIFT_NAME} (هحدد اختياري)` : "") +
+    (HAS_PAY ? `\n💳 طريقة الدفع: ${PAY_NAMES[pay]}` + (pay!=="cod" ? " (هبعت سكرين التحويل)" : "") : "");
+  currentOrderMessage = msg;
   document.getElementById("cartBtn").href = waLink(msg);
+  const reserveBtn = document.getElementById("reserveBtn");
+  reserveBtn.href = reserveMessage() ? waLink(reserveMessage()) : "#";
   el.classList.add("show");
 }
 
 document.getElementById("sumToggle").addEventListener("click", ()=> document.getElementById("cart").classList.toggle("open"));
+document.getElementById("cartFab").addEventListener("click", ()=>{
+  if(!cart.size){document.getElementById("grid").scrollIntoView({behavior:"smooth",block:"start"});return;}
+  const panel=document.getElementById("cart");
+  panel.classList.add("show");
+  panel.classList.toggle("open");
+  if(panel.classList.contains("open")) document.getElementById("items").scrollTop=0;
+});
+document.getElementById("items").addEventListener("change", e=>{
+  if(e.target.id!=="pickupDate" && e.target.id!=="pickupTime") return;
+  pickupDate = document.getElementById("pickupDate").value;
+  pickupTime = document.getElementById("pickupTime").value;
+  document.getElementById("reserveError").textContent = "";
+  document.getElementById("reserveBtn").href = reserveMessage()?waLink(reserveMessage()):"#";
+});
 document.getElementById("items").addEventListener("click", e=>{
+  const reserve = e.target.closest("#reserveBtn");
+  if(reserve){
+    pickupDate = document.getElementById("pickupDate").value;
+    pickupTime = document.getElementById("pickupTime").value;
+    if(!pickupDateValid(pickupDate)){
+      e.preventDefault();
+      document.getElementById("reserveError").textContent="اختار يوم استلام صحيح، النهارده أو أي يوم بعده.";
+      document.getElementById("pickupDate").focus();
+      return;
+    }
+    reserve.href = waLink(reserveMessage());
+    return;
+  }
+  const po = e.target.closest("[data-pay]"); if(po){ pay = po.dataset.pay; renderCart(); return; }
+  const cp = e.target.closest("[data-copy]");
+  if(cp){ try{ navigator.clipboard.writeText(cp.dataset.copy).then(()=>{cp.textContent="اتنسخ ✓";},()=>{}); }catch(_){} return; }
   const b = e.target.closest("[data-q]"); if(!b) return;
-  const i = +b.dataset.q, q = (cart.get(i)||0) + (+b.dataset.d);
+  const i = +b.dataset.q, q = (cart.get(i)||0) + (+b.dataset.d), s = PRODUCTS[i].stock;
+  if(s!=null && q>s) return;
   q>0 ? cart.set(i,q) : cart.delete(i);
   renderGrid(); renderCart();
 });
@@ -314,14 +622,57 @@ document.querySelector("main").addEventListener("click", e=>{
   cart.has(i) ? cart.delete(i) : cart.set(i,1);
   renderGrid(); renderCart();
 });
-document.getElementById("clearCart").addEventListener("click", ()=>{ cart.clear(); renderGrid(); renderCart(); });
+document.querySelector("main").addEventListener("click", e=>{
+  const m = e.target.closest(".more"); if(!m) return;
+  const d = m.previousElementSibling; const o = d.classList.toggle("open");
+  m.textContent = o ? "أقل" : "اقرأ المزيد";
+});
+document.getElementById("clearCart").addEventListener("click", ()=>{ cart.clear(); pickupDate=""; pickupTime=""; renderGrid(); renderCart(); });
+document.getElementById("dealCards").addEventListener("click", e=>{
+  const btn=e.target.closest("[data-offer]");
+  if(!btn) return;
+  const kind=btn.dataset.offer;
+  const msg=document.getElementById("offerMsg");
+  if(kind==="coffee"){
+    const target=document.getElementById("packMsg");
+    target.textContent="اختاري أي نوعين من القهوة (أو عبوتين من نفس النوع) واضغطي ضيفي الباقة للسلة.";
+    target.classList.remove("error");
+    return;
+  }
+  const items=offerProducts(kind);
+  const err=items.some(({i,q})=>PRODUCTS[i]?.stock!=null&&(cart.get(i)||0)+q>PRODUCTS[i].stock);
+  msg.textContent=addItems(items);
+  msg.classList.toggle("error",err||!items.length);
+});
+document.getElementById("addPackToCart").addEventListener("click", ()=>{
+  const checks=[...document.querySelectorAll("#packOptions [data-pack-check]:checked")];
+  const msg=document.getElementById("packMsg");
+  if(!checks.length){msg.textContent="اختاري منتج واحد على الأقل عشان نكوّن باقتك.";msg.classList.add("error");return;}
+  const selected=checks.map(c=>{
+    const field=document.querySelector(`[data-pack-qty="${c.dataset.packCheck}"]`);
+    return {i:+c.dataset.packCheck,q:Number(field.value),max:Number(field.max)};
+  });
+  if(selected.some(x=>!Number.isInteger(x.q)||x.q<1||x.q>x.max)){
+    msg.textContent="راجعي الكميات: لازم تكون أرقام صحيحة داخل الحدود الموضحة لكل منتج.";
+    msg.classList.add("error");return;
+  }
+  const err=selected.some(x=>PRODUCTS[x.i].stock!=null&&(cart.get(x.i)||0)+x.q>PRODUCTS[x.i].stock);
+  msg.textContent=addItems(selected);
+  msg.classList.toggle("error",err);
+  if(err) return;
+  document.querySelectorAll("#packOptions [data-pack-check]").forEach(c=>c.checked=false);
+  document.querySelectorAll("#packOptions [data-pack-qty]").forEach(q=>q.value=1);
+});
 
 document.getElementById("cartBtn").innerHTML = WA_ICON + "اطلب الآن";
 const ask = document.getElementById("askBtn");
 ask.innerHTML = WA_ICON + "كلمنا على واتساب";
 ask.href = waLink(`أهلاً ${STORE_NAME} 👋\nعندي استفسار عن المنتجات`);
 document.getElementById("waText").textContent = "0" + WHATSAPP_NUMBER.slice(2);
-if(DISCOUNT_PCT>0) document.getElementById("promo").innerHTML = `🎁 خصم <b>${fmt(DISCOUNT_PCT)}٪</b> على أي طلب من ${fmt(DISCOUNT_MIN)} جنيه وأكتر`;
+{ const parts=[];
+  if(GIFT_MIN>0) parts.push(`<span class="pi">🎁 ${GIFT_NAME} <b>هدية</b> لما توصل مشترياتك لـ ${fmt(GIFT_MIN)} جنيه</span>`);
+  if(DISCOUNT_PCT>0) parts.push(`<span class="pi">عرض خاص: خصم <b>${fmt(DISCOUNT_PCT)}٪</b> لما مشترياتك توصل لـ ${fmt(DISCOUNT_MIN)} جنيه</span>`);
+  document.getElementById("promo").innerHTML = parts.join(' <span class="sep">•</span> '); }
 const fab = document.getElementById("fab");
 fab.innerHTML = WA_ICON;
 fab.href = waLink(`أهلاً ${STORE_NAME} 👋\nعندي استفسار عن المنتجات`);
@@ -353,14 +704,16 @@ function rowsToProducts(rows){
   const col = (...names)=> head.findIndex(h=>names.includes(h));
   const iName=col("المنتج","اسم المنتج","name"), iUnit=col("الوحدة","unit"), iPrice=col("السعر","price"),
         iCat=col("التصنيف","cat"), iStock=col("متوفر","inStock"), iImg=col("الصورة","img"),
-        iBest=col("الأكثر مبيعًا","الأكثر مبيعا","best"), iShow=col("يظهر في الموقع","show");
+        iBest=col("الأكثر مبيعًا","الأكثر مبيعا","best"), iShow=col("يظهر في الموقع","show"),
+        iDesc=col("الوصف","desc"), iQty=col("المخزون","الكمية المتاحة","stock");
   if(iName<0||iPrice<0) throw new Error("columns");
   const g=(r,i)=> i<0 ? "" : (r[i]||"").trim();
   return rows.slice(1).filter(r=>g(r,iName) && !NO.includes(g(r,iShow).toLowerCase())).map(r=>({
     name:g(r,iName), unit:g(r,iUnit)||"وحدة", price:toNum(g(r,iPrice)),
     cat:g(r,iCat)||"منتجات أخرى",
-    inStock: !NO.includes(g(r,iStock).toLowerCase()),
-    img:g(r,iImg), best: toNum(g(r,iBest)) || 0,
+    stock: g(r,iQty)==="" ? null : toNum(g(r,iQty)),
+    inStock: !NO.includes(g(r,iStock).toLowerCase()) && (g(r,iQty)==="" || toNum(g(r,iQty))>0),
+    img:g(r,iImg), best: toNum(g(r,iBest)) || 0, desc:g(r,iDesc),
   }));
 }
 
@@ -374,7 +727,7 @@ async function init(){
       if(list.length) PRODUCTS = list;
     }catch(err){ console.warn("Sheet not loaded, using backup list", err); }
   }
-  renderFilters(); renderGrid();
+  renderFilters(); renderGrid(); renderOffers(); renderPackChoices(); updateWhiteFridayMessage(); renderCart();
 }
 init();
 </script>
