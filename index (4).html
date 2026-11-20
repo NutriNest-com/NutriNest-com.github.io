@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NutriNest – علاج التغذية | منتجات التغذية والعناية</title>
-<meta name="description" content="NutriNest – علاج التغذية: منتجات تغذية وعناية مختارة. اختار منتجك واطلبه على واتساب.">
+<meta name="description" content="NutriNest – علاج التغذية: منتجات تغذية وعناية مختارة. اختاري منتجك واطلبيه على واتساب، والتوصيل مجاني.">
 <meta property="og:title" content="NutriNest – علاج التغذية">
-<meta property="og:description" content="منتجات تغذية وعناية مختارة — اطلب على واتساب في ثواني.">
+<meta property="og:description" content="منتجات تغذية وعناية مختارة — اطلبي على واتساب في ثواني، والتوصيل مجاني.">
 <meta property="og:image" content="https://nutrinest-com.github.io/logo.png">
 <meta property="og:url" content="https://nutrinest-com.github.io/">
 <meta property="og:type" content="website">
@@ -62,6 +62,10 @@ h1 span{color:var(--cyan)}
 .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
 .name{font-weight:700;font-size:17px;margin:0}
 .unit{color:var(--muted);font-size:13px}
+.desc{margin:2px 0 0;color:#4d4552;font-size:13.5px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.desc.open{display:block}
+.more{background:none;border:0;padding:0;color:var(--plum);font:700 12.5px "Cairo";cursor:pointer;align-self:flex-start}
+.note{font-size:12.5px;color:var(--muted);max-width:640px;margin:0 auto 10px;line-height:1.7}
 .price{font-size:22px;font-weight:800;color:var(--plum);margin-top:auto}
 .price small{font-size:14px;font-weight:600}
 .actions{display:flex;gap:8px;margin-top:8px}
@@ -80,6 +84,9 @@ h1 span{color:var(--cyan)}
 .contact p{margin:0 0 14px;color:var(--muted)}
 .contact .btn{max-width:320px;margin:0 auto;padding:12px}
 .contact .num{display:block;margin-top:10px;font-weight:700;direction:ltr}
+.chan{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:var(--wa);color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:9px 20px;border-radius:999px;box-shadow:0 6px 16px rgba(31,168,85,.3)}
+.chan svg{width:20px;height:20px}
+.chan2{display:block;margin-top:14px;color:var(--wa);font-weight:700;text-decoration:none}
 
 .cart{position:fixed;inset:auto 0 0 0;background:#fff;border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.06);transform:translateY(110%);transition:transform .25s;z-index:10}
 .cart.show{transform:none}
@@ -96,6 +103,7 @@ h1 span{color:var(--cyan)}
   .body{padding:10px 10px 12px}
   .name{font-size:14.5px;line-height:1.45}
   .unit{font-size:12px}
+  .desc{font-size:12.5px;-webkit-line-clamp:3}
   .price{font-size:18px}
   .actions{gap:6px}
   .btn{padding:9px 6px;font-size:12.5px;gap:4px}
@@ -113,20 +121,47 @@ h1 span{color:var(--cyan)}
 .fab{position:fixed;left:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--wa);color:#fff;display:grid;place-items:center;box-shadow:0 6px 18px rgba(31,168,85,.4);z-index:9;transition:bottom .25s}
 .fab svg{width:30px;height:30px}
 body.has-cart .fab{bottom:96px}
+.cart-fab{position:fixed;left:18px;bottom:84px;width:56px;height:56px;border:0;border-radius:50%;background:var(--plum);color:#fff;display:grid;place-items:center;box-shadow:0 6px 18px rgba(157,10,91,.32);z-index:9;cursor:pointer;transition:bottom .25s,transform .2s}
+.cart-fab:hover{transform:translateY(-2px)}
+.cart-fab:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.cart-fab svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cart-fab-count{position:absolute;top:-5px;right:-7px;display:grid;place-items:center;min-width:23px;height:23px;padding:0 5px;border-radius:999px;background:var(--pink);color:#fff;font:800 12px "Cairo",sans-serif;border:2px solid #fff}
+body.has-cart .cart-fab{bottom:136px}
+body.has-cart .fab{display:none}
+body.cart-open .cart-fab,body.cart-open .fab{display:none}
 .cart .sum{cursor:pointer}
 .cart .sum b::after{content:" ▴";font-size:13px;color:var(--muted)}
 .cart.open .sum b::after{content:" ▾"}
 .items{display:none;max-height:45vh;overflow:auto;border-bottom:1px solid var(--line)}
 .cart.open .items{display:block}
+.cart .wrap.items{display:none}
+.cart.open .wrap.items{display:block}
 .item{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
 .item:first-child{border-top:0}
 .item .nm{flex:1;min-width:0;font-weight:600;font-size:14px}
 .item .nm small{display:block;color:var(--muted);font-weight:400}
 .qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .qty button{width:34px;height:34px;border:0;background:#f7f3f5;font:700 18px "Cairo";cursor:pointer;color:var(--plum)}
+.qty button:disabled{opacity:.35;cursor:not-allowed}
+.low{color:#d4380d;font-size:12.5px;font-weight:700}
+.cart .sum .hint{color:var(--muted);font-weight:400}
+.pay{padding:12px 0 6px;border-top:1px solid var(--line)}
+.pay .pt{font-weight:700;font-size:14px;margin-bottom:8px}
+.pos{display:flex;gap:8px;flex-wrap:wrap}
+.po{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font:600 13.5px "Cairo";cursor:pointer}
+.po.on{background:var(--plum);border-color:var(--plum);color:#fff}
+.pbox{margin-top:10px;background:#fbf7f9;border:1px dashed #e6c9d7;border-radius:12px;padding:10px 12px;font-size:13.5px}
+.pbox .acc{display:flex;align-items:center;gap:10px;margin:6px 0}
+.pbox .acc b{font-size:16px}
+.cp{border:0;background:var(--cyan);color:#fff;border-radius:8px;padding:4px 12px;font:700 12.5px "Cairo";cursor:pointer}
+.plink{display:inline-block;margin:2px 0 6px;color:var(--plum);font-weight:700}
+.pbox small{display:block;color:var(--muted)}
 .qty span{min-width:30px;text-align:center;font-weight:700}
 .promo{background:linear-gradient(90deg,var(--plum),var(--pink));color:#fff;text-align:center;font-weight:700;font-size:15px;padding:9px 14px;line-height:1.5}
 .promo:empty{display:none}
+.promo .sep{opacity:.6;margin:0 6px}
+.promo .pi{display:inline-block}
+@media (max-width:560px){.promo{font-size:13.5px;padding:7px 10px}.promo .sep{display:none}.promo .pi{display:block}}
 .promo b{background:#fff;color:var(--plum);padding:1px 8px;border-radius:999px;margin:0 2px}
 .cart .sum .off{color:var(--wa);font-weight:700}
 .cart .sum .near{color:var(--pink);font-weight:700}
@@ -137,10 +172,74 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 30px}
   .fab{width:48px;height:48px;left:12px;bottom:14px}
   .fab svg{width:26px;height:26px}
   body.has-cart .fab{bottom:88px}
+  .cart-fab{width:48px;height:48px;left:12px;bottom:72px}
+  .cart-fab svg{width:24px;height:24px}
+  body.has-cart .cart-fab{bottom:136px}
 }
+
+.deal-section,.bf-section{margin:24px 0;background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 8px 24px rgba(157,10,91,.05)}
+.deal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.deal-card{border:1px solid var(--line);border-radius:16px;padding:16px;background:linear-gradient(145deg,#fff,#fff9fc);display:flex;flex-direction:column;gap:6px}
+.deal-card h3{margin:0;color:var(--plum);font-size:17px}
+.deal-card p{margin:0;color:var(--muted);font-size:13.5px}
+.deal-price{font-weight:800;color:var(--plum);font-size:19px}
+.deal-save{font-size:12px;color:var(--wa);font-weight:700}
+.deal-card .btn{margin-top:auto;flex:none}
+.deal-card .btn:disabled{opacity:.5;cursor:not-allowed}
+.b-thumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:4px 0 2px}
+.b-thumb{position:relative;width:62px;height:62px;border-radius:12px;background:#fff;border:1px solid var(--line);overflow:hidden;display:grid;place-items:center}
+.b-thumb img{width:100%;height:100%;object-fit:contain}
+.b-thumb svg{width:55%;height:55%}
+.b-thumb .q{position:absolute;bottom:3px;left:3px;background:var(--plum);color:#fff;font:800 11px "Cairo";border-radius:999px;padding:0 6px;line-height:1.6}
+.b-plus{color:var(--muted);font-weight:800;font-size:15px}
+.b-gift{background:linear-gradient(135deg,var(--soft),#e8f7fc);border:1.5px dashed var(--pink);text-align:center;font:700 10.5px/1.35 "Cairo";color:var(--plum);padding:3px}
+.b-gift span{display:block;font-size:20px;line-height:1.1}
+.mix{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.mix-row{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;padding:8px;background:#fff;transition:border-color .2s,background .2s}
+.mix-row.on{border-color:var(--pink);background:#fff8fc}
+.mix-row .b-thumb{width:52px;height:52px;flex:none}
+.mix-row .mn{flex:1;min-width:0;font-weight:700;font-size:13.5px;line-height:1.45}
+.mix-row .mn small{display:block;color:var(--muted);font-weight:600;font-size:12.5px}
+.mix-row .qty button{width:32px;height:32px}
+.prog{margin:4px 2px 14px;position:sticky;top:0;z-index:3;background:#fff;padding:10px 4px 6px}
+.bar{position:relative;height:12px;background:#f3e8ee;border-radius:999px}
+.fill{height:100%;max-width:100%;border-radius:999px;background:linear-gradient(270deg,var(--pink),var(--plum));transition:width .35s}
+.mark{position:absolute;top:50%;transform:translate(50%,-50%);width:24px;height:24px;border-radius:50%;background:#fff;border:2px solid #e6c9d7;display:grid;place-items:center;font-size:12px}
+.mark.done{border-color:var(--wa);background:#eafaf0}
+.marks{position:relative;height:18px;margin-top:6px;font-size:11.5px;color:var(--muted);font-weight:700}
+.marks span{position:absolute;transform:translateX(50%);white-space:nowrap}
+.marks span:last-child{transform:none;left:0}
+.prog-txt{margin:8px 0 0;font-weight:800;color:var(--plum);font-size:14.5px}
+.prog-txt.win{color:var(--wa)}
+#builder .btn{flex:none;padding:11px 26px;margin-top:12px}
+.deal-rule{font-size:12px;color:var(--muted);margin:12px 2px 0}
+.pack-msg{margin:0;color:var(--muted);font-size:13px}
+.pack-msg.error{color:#b42318}
+.bf-section{background:linear-gradient(125deg,#9d0a5b,#d02073);color:#fff;border:0;text-align:center;padding:26px 20px}
+.bf-section h2{color:#fff;margin:2px 0;font-size:26px}
+.bf-section p{margin:6px 0}
+.bf-rate{font-size:42px;font-weight:800;line-height:1.2}
+.bf-note{font-size:13px;opacity:.9}
+.bf-section .btn{display:inline-flex;background:#fff;color:var(--plum);margin-top:10px}
+.bf-section.at-top{margin:0;border-radius:0;box-shadow:none;padding:10px 18px}
+.bf-compact{max-width:1100px;margin:auto;display:flex;justify-content:center;align-items:center;gap:10px 16px;flex-wrap:wrap}
+.bf-section.at-top .bf-rate{font-size:22px;line-height:1.3}
+.bf-section.at-top .bf-note{font-size:14px;font-weight:700}
+.bf-compact #bfMessage{margin:0;font-size:13px;opacity:.94}
+@media(max-width:560px){.deal-section,.bf-section{padding:15px 12px;border-radius:18px}.deal-grid{grid-template-columns:1fr}.bf-section h2{font-size:22px}.bf-rate{font-size:36px}}
+@media(max-width:560px){.bf-section.at-top{border-radius:0;padding:9px 10px}.bf-compact{gap:3px 10px}.bf-section.at-top .bf-rate{font-size:19px}.bf-compact #bfMessage{width:100%;font-size:12px}}
+
 </style>
 </head>
 <body>
+
+<section class="bf-section at-top" id="whiteFriday">
+  <div class="bf-compact">
+    <span class="bf-note">✨ وايت فرايدي</span>
+    <strong class="bf-rate" id="bfRate">خصم 15٪</strong>
+    <span id="bfMessage"></span>
+  </div>
+</section>
 
 <div class="promo" id="promo"></div>
 
@@ -148,31 +247,55 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 30px}
   <div class="wrap">
     <img class="logo" src="data:image/webp;base64,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" alt="NutriNest">
     <h1>NutriNest <span>–</span> علاج التغذية</h1>
-    <p class="tag">منتجات تغذية وعناية مختارة — اختار اللي يناسبك واطلبه في ثواني على واتساب.</p>
-    <div class="how"><span>١. اختار المنتج</span><span>٢. اضغط «اطلب على واتساب»</span><span>٣. هنأكد معاك الطلب والتوصيل</span></div>
+    <p class="tag">منتجات تغذية وعناية مختارة — اختاري اللي يناسبك واطلبيه في ثواني على واتساب، والتوصيل مجاني 🚚</p>
+    <div class="how"><span>١. اختاري المنتج</span><span>٢. اضغطي «اطلبي على واتساب»</span><span>٣. هنأكد معاكي الطلب، والتوصيل مجاني 🚚</span></div>
+    <a class="chan" href="https://whatsapp.com/channel/0029VbEfb77JJhzUEXhQfB2a" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4a1 1 0 0 0 1 1h2l5 4V5L6 9H4a1 1 0 0 0-1 1Zm13.5 2A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4ZM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6Z"/></svg>تابعي قناتنا على واتساب للعروض الجديدة</a>
   </div>
 </header>
 
 <main class="wrap">
   <section class="best" id="bestSec">
-    <div class="sec-head"><h2>⭐ الأكثر مبيعًا</h2><span>المنتجات اللي عملاؤنا بيطلبوها أكتر</span></div>
+    <div class="sec-head"><h2>⭐ الأكثر مبيعًا</h2><span>المنتجات اللي عميلاتنا بيطلبوها أكتر</span></div>
     <div class="best-row" id="bestRow"></div>
   </section>
+
+  <section class="deal-section" id="bundles">
+    <div class="sec-head"><h2>🎁 باقات بهدية</h2><span>كل باقة بتوصّل طلبك لـ 600 جنيه، فبتاخدي معاها هدية</span></div>
+    <div class="deal-grid" id="bundleCards"></div>
+    <p class="pack-msg" id="bundleMsg" aria-live="polite"></p>
+    <p class="deal-rule">الهدية (أعشاب أو نقط، تختاريها) بتتضاف لوحدها لما طلبك يوصل 600 جنيه، بباقة أو من غيرها. ولو وصل 1000 جنيه، بتاخدي كمان خصم 10٪.</p>
+  </section>
+
+  <section class="deal-section" id="builder">
+    <div class="sec-head"><h2>🧺 كوّني باقتك على مزاجك</h2><span>اختاري اللي يعجبك، وشوفي فاضلك قد إيه على الهدية والخصم</span></div>
+    <div class="prog" id="mixProg"></div>
+    <div class="mix" id="mixList"></div>
+    <button class="btn btn-wa" id="mixGo" type="button">كمّلي طلبك</button>
+    <p class="pack-msg" id="mixMsg" aria-live="polite"></p>
+  </section>
+
   <div class="sec-head all-head"><h2>كل المنتجات</h2></div>
   <div class="filters" id="filters"></div>
   <div class="grid" id="grid"></div>
 
   <section class="contact">
-    <h2>محتاج استشارة قبل ما تطلب؟</h2>
-    <p>كلمنا على واتساب وهنساعدك تختار المنتج المناسب ليك.</p>
+    <h2>محتاجة استشارة قبل ما تطلبي؟</h2>
+    <p>كلمينا على واتساب وهنساعدك تختاري المنتج المناسب ليكي.</p>
     <a class="btn btn-wa" id="askBtn" href="#" target="_blank" rel="noopener"></a>
     <span class="num" id="waText"></span>
+    <a class="chan2" href="https://whatsapp.com/channel/0029VbEfb77JJhzUEXhQfB2a" target="_blank" rel="noopener">📢 تابعي قناة NutriNest على واتساب، ورقمك مش بيظهر لحد</a>
   </section>
 </main>
 
-<footer>© <span id="yr"></span> NutriNest – علاج التغذية • الأسعار بالجنيه المصري</footer>
+<footer>
+  <p class="note">المنتجات مكملات غذائية ومستحضرات تجميل، ومش بديل عن استشارة الطبيب. غير مناسبة للحوامل والمرضعات وأصحاب الأمراض المزمنة إلا بعد استشارة الطبيب.</p>
+ © <span id="yr"></span> NutriNest – علاج التغذية • الأسعار بالجنيه المصري • التوصيل مجاني</footer>
 
-<a class="fab" id="fab" href="#" target="_blank" rel="noopener" aria-label="كلمنا على واتساب"></a>
+<a class="fab" id="fab" href="#" target="_blank" rel="noopener" aria-label="كلمينا على واتساب"></a>
+<button class="cart-fab" id="cartFab" type="button" aria-label="السلة فاضية، اختاري منتجات" title="افتحي سلة المشتريات">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1"/><circle cx="19" cy="20" r="1"/><path d="M2 3h2l2.7 12.1a2 2 0 0 0 2 1.6h9.5a2 2 0 0 0 2-1.6L22 7H5"/></svg>
+  <span class="cart-fab-count" id="cartFabCount" aria-hidden="true">0</span>
+</button>
 
 <div class="cart" id="cart">
   <div class="wrap items" id="items"></div>
@@ -193,22 +316,40 @@ const STORE_NAME = "NutriNest";
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1UgSTsBCgpOLtAYGZxuALx4oB48jqisPGAIgHd_ch86E/gviz/tq?tqx=out:csv&sheet=%D8%A7%D9%84%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA";
 
 /* العرض: نسبة الخصم والحد الأدنى للطلب (اكتب 0 في النسبة عشان تلغي العرض) */
-const DISCOUNT_PCT = 15;
-const DISCOUNT_MIN = 1000;
+const REGULAR_DISCOUNT_PCT = 10;
+const WHITE_FRIDAY_DISCOUNT_PCT = 15;
+const WHITE_FRIDAY_DATE = "2026-11-27";
+const todayKey = (()=>{
+  const parts = new Intl.DateTimeFormat("en-US",{timeZone:"Africa/Cairo",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
+  const pick = key => parts.find(p=>p.type===key).value;
+  return `${pick("year")}-${pick("month")}-${pick("day")}`;
+})();
+const REGULAR_DISCOUNT_MIN = 1000;
+const WHITE_FRIDAY_DISCOUNT_MIN = 700;   // حد الخصم يوم الوايت فرايدي بس
+const IS_WHITE_FRIDAY = todayKey===WHITE_FRIDAY_DATE;
+const DISCOUNT_PCT = IS_WHITE_FRIDAY ? WHITE_FRIDAY_DISCOUNT_PCT : REGULAR_DISCOUNT_PCT;
+const DISCOUNT_MIN = IS_WHITE_FRIDAY ? WHITE_FRIDAY_DISCOUNT_MIN : REGULAR_DISCOUNT_MIN;
+const FREE_DELIVERY = true;   // false = يشيل «التوصيل مجاني» من السلة والرسالة
+const GIFT_MIN = 600;        // اكتب 0 عشان تلغي الهدية
+const GIFT_NAME = "أعشاب أو نقط";
+
+/* الدفع: سيبهم فاضيين لو مش عايز تعرضهم (الكاش عند الاستلام دايمًا موجود) */
+const INSTAPAY = "01099921514";         // عنوان إنستاباي، مثال: nutrinest@instapay
+const INSTAPAY_LINK = "https://ipn.eg/S/a.ramadan.777/instapay/7miURe";    // لينك الدفع من تطبيق إنستاباي (اختياري)، مثال: https://ipn.eg/S/nutrinest/instapay/xxxx
+const VFCASH = "01099921514";           // رقم محفظة فودافون كاش، مثال: 01012345678
 
 /* نسخة احتياطية من المنتجات (بتظهر لو الشيت مش متاح).
    inStock:false = يظهر «نفد مؤقتًا».  best:1 / 2 / 3 = يظهر في «الأكثر مبيعًا» بالترتيب ده (امسحها عشان تشيله).  img: اسم ملف الصورة لما ترفعها (مثلاً "green-coffee.jpg") */
 let PRODUCTS = [
-  {name:"قهوة خضرا سوبر جرين كوفي", unit:"وحدة",  price:180, cat:"قهوة",            inStock:true,  img:"super-green-coffee.webp", best:1},
-  {name:"قهوة بيضة نسكافيه",          unit:"وحدة",  price:220, cat:"قهوة",            inStock:true,  img:"ultra-green-coffee.webp"},
-  {name:"قهوة كونجاك",                unit:"وحدة",  price:220, cat:"قهوة",            inStock:true,  img:"konjac-coffee.webp"},
-  {name:"براند كاب بلس",              unit:"شريط",  price:130, cat:"برشام وكبسولات",  inStock:false, img:"brand-cap-plus.webp", best:3},
-  {name:"برشام اكسبريس الأصفر",       unit:"شريط",  price:120, cat:"برشام وكبسولات",  inStock:true,  img:"xpress-slim.webp", best:2},
-  {name:"أعشاب",                      unit:"علبة",  price:70,  cat:"أعشاب ونقط",      inStock:true,  img:"konjac-tea.webp"},
-  {name:"نقط",                        unit:"وحدة",  price:70,  cat:"أعشاب ونقط",      inStock:true,  img:"konjac-drops.webp"},
-  {name:"كريم كونجاك",                unit:"وحدة",  price:100, cat:"كريمات",          inStock:true,  img:"konjac-cream.webp"},
-  {name:"كريم ماكس فيلر",             unit:"وحدة",  price:100, cat:"كريمات",          inStock:true,  img:"max-filler.webp"},
-  {name:"أمبول جلسات",                unit:"أمبول", price:600, cat:"أمبولات",         inStock:true,  img:"fusion-plus.webp"},
+  {name:"قهوة خضرا سوبر جرين كوفي", unit:"وحدة",  price:220, cat:"قهوة",            inStock:true,  img:"super-green-coffee.webp", best:1, desc:"قهوة خضراء سريعة التحضير من 30 Green Coffee، بخلاصات عشبية مع الكروم والجنسنج. العلبة 30 كيس × 5 جم. الاستخدام: كيس واحد في 100 مل مية سخنة، كوباية في اليوم، مع نظام غذائي صحي.", stock:2},
+  {name:"قهوة ألترا جرين كوفي",       unit:"وحدة",  price:240, cat:"قهوة",            inStock:true,  img:"ultra-green-coffee.webp", desc:"قهوة خضراء Ultra Green Coffee غنية بالجارسينيا والألياف الطبيعية، في أكياس فردية سهلة التحضير. تُستخدم مع نظام غذائي صحي ونشاط بدني.", stock:3},
+  {name:"قهوة كونجاك دايت",           unit:"وحدة",  price:240, cat:"قهوة",            inStock:true,  img:"konjac-coffee.webp", desc:"قهوة دايت من Fettarm بخلاصة الكونجاك. العلبة 30 كيس × 5 جم. كيس واحد في اليوم في مية سخنة بدل قهوتك المعتادة.", stock:3},
+  {name:"براند كاب بلس",              unit:"شريط",  price:140, cat:"برشام وكبسولات",  inStock:false, img:"brand-cap-plus.webp", best:3, desc:"كبسولات أعشاب Brand Cap Plus من Fettarm. على كل علبة كود تقدر تتأكد بيه إن المنتج أصلي من موقع الشركة. تُستخدم حسب الإرشادات المكتوبة على العبوة.", stock:0},
+  {name:"كبسولات إكسبريس سليم",       unit:"شريط",  price:130, cat:"برشام وكبسولات",  inStock:true,  img:"xpress-slim.webp", best:2, desc:"كبسولات Xpress Slim من Golden Line في علبة معدنية، 36 كبسولة × 500 مجم. تُستخدم حسب الإرشادات المكتوبة على العبوة.", stock:6},
+  {name:"شاي أعشاب كونجاك",           unit:"علبة",  price:70,  cat:"أعشاب ونقط",      inStock:true,  img:"konjac-tea.webp", desc:"شاي أعشاب Konjac من Herbal Kings. العلبة 30 فتلة × 2 جم. فتلة واحدة في كوباية مية سخنة.", stock:5},
+  {name:"نقط أعشاب كونجاك",           unit:"وحدة",  price:70,  cat:"أعشاب ونقط",      inStock:true,  img:"konjac-drops.webp", desc:"نقط أعشاب Konjac من Herbal Kings، عبوة 30 مل. تُستخدم حسب الإرشادات المكتوبة على العبوة.", stock:3},
+  {name:"كريم كونجاك للجسم",          unit:"وحدة",  price:100, cat:"كريمات",          inStock:true,  img:"konjac-cream.webp", desc:"كريم تجميلي للجسم Konjac من Herbal Kings بخلاصة حبوب البن مع الكافيين والصبار والشاي الأخضر وفيتامين E. للاستخدام الخارجي فقط، 150 مل.", stock:1},
+  {name:"كريم ماكس فيلر",             unit:"وحدة",  price:100, cat:"كريمات",          inStock:true,  img:"max-filler.webp", desc:"كريم تجميلي Max Filler من Paxtone بالكولاجين وحمض الهيالورونيك وفيتامين C وE لترطيب وتنعيم البشرة. 100 مل، للاستخدام الخارجي.", stock:1},
 ];
 /* ===================== */
 
@@ -238,8 +379,8 @@ function renderFilters(){
 
 function cardHTML(p, showRank){
   const msg = p.inStock
-    ? `أهلاً ${STORE_NAME} 👋\nعايز أطلب: ${p.name}\nالسعر: ${p.price} ج.م`
-    : `أهلاً ${STORE_NAME} 👋\nعايز أحجز: ${p.name} (لما يتوفر)`;
+    ? `أهلاً ${STORE_NAME} 👋\nعايزة أطلب: ${p.name}\nالسعر: ${p.price} ج.م`
+    : `أهلاً ${STORE_NAME} 👋\nعايزة أحجز: ${p.name} (لما يتوفر)`;
   const medal = ["🥇","🥈","🥉"][p.best-1] || "⭐";
   const rank = p.best ? (showRank ? `<span class="rank medal">${medal}</span>` : `<span class="rank">الأكثر مبيعًا</span>`) : "";
   const showBadge = !p.inStock || (!showRank && !p.best);
@@ -252,11 +393,13 @@ function cardHTML(p, showRank){
       </div>
       <div class="body">
         <h3 class="name">${esc(p.name)}</h3>
+        ${p.desc ? `<p class="desc">${esc(p.desc)}</p>${p.desc.length>70?'<button class="more" type="button">اقرأي المزيد</button>':''}` : ""}
         <span class="unit">السعر لكل ${esc(p.unit)}</span>
+        ${p.inStock && p.stock!=null && p.stock<=2 ? `<span class="low">🔥 باقي ${fmt(p.stock)} بس</span>` : ""}
         <div class="price">${fmt(p.price)} <small>ج.م</small></div>
         <div class="actions">
-          <a class="btn btn-wa" href="${waLink(msg)}" target="_blank" rel="noopener">${WA_ICON}${p.inStock?"اطلب":"احجزه"}<span class="long"> على واتساب</span></a>
-          ${p.inStock ? `<button class="btn btn-add ${cart.has(p.i)?"in":""}" data-i="${p.i}" type="button" title="أضف للسلة">${cart.has(p.i)?"✓":"+"}</button>` : ""}
+          <a class="btn btn-wa" href="${waLink(msg)}" target="_blank" rel="noopener">${WA_ICON}${p.inStock?"اطلبي":"احجزيه"}<span class="long"> على واتساب</span></a>
+          ${p.inStock ? `<button class="btn btn-add ${cart.has(p.i)?"in":""}" data-i="${p.i}" type="button" title="ضيفي للسلة">${cart.has(p.i)?"✓":"+"}</button>` : ""}
         </div>
       </div>
     </article>`;
@@ -274,37 +417,145 @@ function renderGrid(){
   renderBest();
 }
 
+const HAS_PAY = !!(INSTAPAY || VFCASH);
+const PAY_NAMES = {cod:"كاش عند الاستلام", insta:"إنستاباي", vf:"فودافون كاش"};
+let pay = "cod";
+function payHTML(){
+  if(!HAS_PAY) return "";
+  const opt=(v,label)=>`<button type="button" class="po ${pay===v?"on":""}" data-pay="${v}">${label}</button>`;
+  let box="";
+  if(pay==="insta") box=`<div class="pbox">حوّلي الإجمالي على إنستاباي (رقم الموبايل):<div class="acc"><b dir="ltr">${esc(INSTAPAY)}</b><button type="button" class="cp" data-copy="${esc(INSTAPAY)}">نسخ</button></div>${INSTAPAY_LINK?`<a class="plink" href="${esc(INSTAPAY_LINK)}" target="_blank" rel="noopener">افتحي إنستاباي وادفعي ↗</a>`:""}<small>وبعد التحويل ابعتي سكرين على واتساب مع طلبك.</small></div>`;
+  if(pay==="vf") box=`<div class="pbox">حوّلي الإجمالي على فودافون كاش:<div class="acc"><b dir="ltr">${esc(VFCASH)}</b><button type="button" class="cp" data-copy="${esc(VFCASH)}">نسخ</button></div><small>وبعد التحويل ابعتي سكرين على واتساب مع طلبك.</small></div>`;
+  return `<div class="pay"><div class="pt">طريقة الدفع</div><div class="pos">${opt("cod","💵 كاش عند الاستلام")}${INSTAPAY?opt("insta","إنستاباي"):""}${VFCASH?opt("vf","فودافون كاش"):""}</div>${box}</div>`;
+}
+/* ===== الباقات: كل باقة مجموعة منتجات بتتضاف للسلة مرة واحدة، والهدية بتتحسب لوحدها لما الإجمالي يوصل GIFT_MIN ===== */
+const BUNDLES = [
+  {id:"coffee-herbs", title:"باقة القهوة والأعشاب", items:[{m:/سوبر\s*جرين/,q:1},{m:/ألترا|الترا/,q:1},{m:/شاي/,q:1},{m:/نقط/,q:1}]},
+  {id:"xpress",       title:"باقة إكسبريس سليم",    items:[{m:/إكسبريس|اكسبريس|xpress/i,q:3},{m:/سوبر\s*جرين/,q:1}]},
+];
+function bundleItems(b){
+  const out=[];
+  for(const it of b.items){
+    const i=PRODUCTS.findIndex(p=>it.m.test(p.name));
+    if(i<0) return null;
+    out.push({i,q:it.q});
+  }
+  return out;
+}
+function renderBundles(){
+  const cards=BUNDLES.map(b=>{
+    const items=bundleItems(b); if(!items) return "";
+    const total=items.reduce((s,{i,q})=>s+PRODUCTS[i].price*q,0);
+    const ok=items.every(({i,q})=>PRODUCTS[i].inStock&&(PRODUCTS[i].stock==null||PRODUCTS[i].stock>=q));
+    const list=items.map(({i,q})=>esc(PRODUCTS[i].name)+(q>1?` × ${fmt(q)}`:"")).join(" + ");
+    const gift=GIFT_MIN>0&&total>=GIFT_MIN;
+    const thumbs=items.map(({i,q})=>{const p=PRODUCTS[i];return `<div class="b-thumb" title="${esc(p.name)}">${p.img?`<img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy">`:(ICONS[p.cat]||ICONS["أعشاب ونقط"])}${q>1?`<span class="q">×${fmt(q)}</span>`:""}</div>`;}).join('<span class="b-plus">+</span>')
+      + (gift?`<span class="b-plus">+</span><div class="b-thumb b-gift"><span>🎁</span>هدية</div>`:"");
+    return `<article class="deal-card"><h3>${esc(b.title)}</h3><div class="b-thumbs">${thumbs}</div><p>${list}</p><span class="deal-price">${fmt(total)} ج.م</span>${gift?`<span class="deal-save">+ 🎁 ${esc(GIFT_NAME)} هدية (تختاريها)</span>`:""}<button class="btn btn-wa" type="button" data-bundle="${b.id}" ${ok?"":"disabled"}>${ok?"ضيفي الباقة للسلة":"غير متوفرة حاليًا"}</button></article>`;
+  }).join("");
+  document.getElementById("bundles").hidden=!cards;
+  document.getElementById("bundleCards").innerHTML=cards;
+}
+
+function addItems(items){
+  if(!items||!items.length) return {ok:false,msg:"المنتجات دي مش متاحة حاليًا."};
+  for(const {i,q} of items){
+    const p=PRODUCTS[i];
+    if(!p?.inStock||p.stock!=null&&(cart.get(i)||0)+q>p.stock) return {ok:false,msg:`الكمية المطلوبة من ${p.name} أكبر من المتاح.`};
+  }
+  items.forEach(({i,q})=>cart.set(i,(cart.get(i)||0)+q));
+  renderGrid(); renderCart();
+  return {ok:true,msg:"اتضافت الباقة للسلة ✓"};
+}
+
+function updateWhiteFridayMessage(){
+  const message=document.getElementById("bfMessage");
+  document.getElementById("bfRate").textContent=`خصم ${fmt(WHITE_FRIDAY_DISCOUNT_PCT)}٪`;
+  if(IS_WHITE_FRIDAY) message.textContent=`النهارده بس • على الطلبات من ${fmt(WHITE_FRIDAY_DISCOUNT_MIN)} جنيه`;
+  else if(todayKey<WHITE_FRIDAY_DATE) message.textContent=`الجمعة 27 نوفمبر • على الطلبات من ${fmt(WHITE_FRIDAY_DISCOUNT_MIN)} جنيه`;
+  else document.getElementById("whiteFriday").hidden=true;
+}
+
+function renderMix(){
+  const rows=PRODUCTS.map((p,i)=>({p,i})).filter(x=>x.p.inStock);
+  document.getElementById("builder").hidden=!rows.length;
+  document.getElementById("mixList").innerHTML=rows.map(({p,i})=>{
+    const q=cart.get(i)||0, max=p.stock??Infinity;
+    return `<div class="mix-row ${q?"on":""}"><div class="b-thumb">${p.img?`<img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy">`:(ICONS[p.cat]||ICONS["أعشاب ونقط"])}</div><div class="mn">${esc(p.name)}<small>${fmt(p.price)} ج.م / ${esc(p.unit)}</small></div><div class="qty"><button type="button" data-mq="${i}" data-md="1" ${q>=max?"disabled":""} aria-label="زوّدي ${esc(p.name)}">+</button><span>${fmt(q)}</span><button type="button" data-mq="${i}" data-md="-1" ${q?"":"disabled"} aria-label="قللي ${esc(p.name)}">−</button></div></div>`;
+  }).join("");
+  let total=0; cart.forEach((q,i)=>total+=PRODUCTS[i].price*q);
+  const top=DISCOUNT_PCT>0?DISCOUNT_MIN:(GIFT_MIN||1);
+  const pct=v=>Math.min(100,v/top*100);
+  const giftOn=GIFT_MIN>0, offOn=DISCOUNT_PCT>0;
+  let txt, win=false;
+  if(giftOn&&total<GIFT_MIN) txt=total?`فاضل ${fmt(GIFT_MIN-total)} ج.م وتاخدي ${GIFT_NAME} هدية 🎁`:`ابدئي اختاري، ومن ${fmt(GIFT_MIN)} جنيه ليكي هدية 🎁`;
+  else if(offOn&&total<DISCOUNT_MIN) txt=`🎁 الهدية بقت ليكي! فاضل ${fmt(DISCOUNT_MIN-total)} ج.م على خصم ${fmt(DISCOUNT_PCT)}٪`;
+  else {win=true; txt=`🎉 ${giftOn?"خدتي الهدية":""}${giftOn&&offOn?" و":""}${offOn?`خصم ${fmt(DISCOUNT_PCT)}٪`:""} • إجمالي طلبك ${fmt(total)} ج.م`;}
+  document.getElementById("mixProg").innerHTML=`<div class="bar"><div class="fill" style="width:${pct(total)}%"></div>${giftOn?`<span class="mark ${total>=GIFT_MIN?"done":""}" style="right:${pct(GIFT_MIN)}%">🎁</span>`:""}${offOn?`<span class="mark ${total>=DISCOUNT_MIN?"done":""}" style="right:calc(100% - 12px)">%</span>`:""}</div><div class="marks">${giftOn?`<span style="right:${pct(GIFT_MIN)}%">هدية ${fmt(GIFT_MIN)}</span>`:""}${offOn?`<span>خصم ${fmt(DISCOUNT_PCT)}٪ • ${fmt(DISCOUNT_MIN)}</span>`:""}</div><p class="prog-txt ${win?"win":""}">${txt}</p>`;
+}
+
+function syncCartOpen(){
+  document.body.classList.toggle("cart-open", document.getElementById("cart").classList.contains("open"));
+}
+
 function renderCart(){
   const el = document.getElementById("cart");
+  const itemCount=[...cart.values()].reduce((sum,q)=>sum+q,0);
+  document.getElementById("cartFabCount").textContent=fmt(itemCount);
+  document.getElementById("cartFab").setAttribute("aria-label",itemCount?`افتحي السلة، فيها ${fmt(itemCount)} قطعة`:"السلة فاضية، اختاري منتجات");
   document.body.classList.toggle("has-cart", cart.size>0);
-  if(!cart.size){ el.classList.remove("show","open"); return; }
+  renderMix();
+  if(!cart.size){ el.classList.remove("show","open"); syncCartOpen(); return; }
   let total = 0, count = 0; const lines = [];
   cart.forEach((q,i)=>{ const p=PRODUCTS[i]; total+=p.price*q; count+=q; lines.push({p,q,i}); });
   const hasOff = DISCOUNT_PCT>0 && total>=DISCOUNT_MIN;
   const off = hasOff ? Math.round(total*DISCOUNT_PCT/100) : 0;
   const final = total - off;
+  const hasGift = GIFT_MIN>0 && total>=GIFT_MIN;
   document.getElementById("cartTotal").innerHTML = hasOff
     ? `${fmt(count)} قطعة • ${fmt(final)} ج.م <s>${fmt(total)}</s>`
     : `${fmt(count)} قطعة • ${fmt(total)} ج.م`;
-  document.getElementById("cartList").innerHTML = hasOff
-    ? `<span class="off">🎉 خصم ${fmt(DISCOUNT_PCT)}٪ • وفّرت ${fmt(off)} ج.م</span>`
-    : (DISCOUNT_PCT>0 ? `<span class="near">زوّد ${fmt(DISCOUNT_MIN-total)} ج.م وخد خصم ${fmt(DISCOUNT_PCT)}٪</span>` : "تعديل الكميات");
+  const parts=[];
+  if(hasOff) parts.push(`<span class="off">🎉 خصم ${fmt(DISCOUNT_PCT)}٪ (وفّرتي ${fmt(off)} ج.م)</span>`);
+  if(hasGift) parts.push(`<span class="off">🎁 ${GIFT_NAME} هدية</span>`);
+  else if(GIFT_MIN>0) parts.push(`<span class="near">زوّدي ${fmt(GIFT_MIN-total)} ج.م وخدي ${GIFT_NAME} هدية 🎁</span>`);
+  if(!hasOff && DISCOUNT_PCT>0 && (hasGift || GIFT_MIN<=0)) parts.push(`<span class="near">زوّدي ${fmt(DISCOUNT_MIN-total)} ج.م وخدي خصم ${fmt(DISCOUNT_PCT)}٪</span>`);
+  if(FREE_DELIVERY) parts.push(`<span class="off">🚚 توصيل مجاني</span>`);
+  document.getElementById("cartList").innerHTML = parts.join(" • ") + `<span class="hint"> • الكميات والدفع ▴</span>`;
   document.getElementById("items").innerHTML = lines.map(l=>`
     <div class="item">
       <div class="nm">${esc(l.p.name)}<small>${fmt(l.p.price)} ج.م × ${fmt(l.q)} = ${fmt(l.p.price*l.q)} ج.م</small></div>
-      <div class="qty"><button type="button" data-q="${l.i}" data-d="1">+</button><span>${fmt(l.q)}</span><button type="button" data-q="${l.i}" data-d="-1">−</button></div>
-    </div>`).join("");
-  const msg = `أهلاً ${STORE_NAME} 👋\nعايز أطلب:\n` +
+      <div class="qty"><button type="button" data-q="${l.i}" data-d="1" ${l.p.stock!=null&&l.q>=l.p.stock?"disabled":""}>+</button><span>${fmt(l.q)}</span><button type="button" data-q="${l.i}" data-d="-1">−</button></div>
+    </div>`).join("") + payHTML();
+  const discountMessage = hasOff
+    ? `\nالإجمالي قبل الخصم: ${total} ج.م\nخصم ${DISCOUNT_PCT}%: -${off} ج.م\nالإجمالي بعد الخصم: ${final} ج.م`
+    : `\nالإجمالي: ${total} ج.م`;
+  const msg = `أهلاً ${STORE_NAME} 👋\nعايزة أطلب:\n` +
     lines.map(l=>`• ${l.p.name} × ${l.q} = ${l.p.price*l.q} ج.م`).join("\n") +
-    (hasOff ? `\nالإجمالي قبل الخصم: ${total} ج.م\nخصم ${DISCOUNT_PCT}%: -${off} ج.م\nالإجمالي بعد الخصم: ${final} ج.م` : `\nالإجمالي: ${total} ج.م`);
+    discountMessage +
+    (FREE_DELIVERY ? `\n🚚 التوصيل: مجاني` : "") +
+    (hasGift ? `\n🎁 الهدية: ${GIFT_NAME} (هحدد اختياري)` : "") +
+    (HAS_PAY ? `\n💳 طريقة الدفع: ${PAY_NAMES[pay]}` + (pay!=="cod" ? " (هبعت سكرين التحويل)" : "") : "");
   document.getElementById("cartBtn").href = waLink(msg);
   el.classList.add("show");
+  syncCartOpen();
 }
 
-document.getElementById("sumToggle").addEventListener("click", ()=> document.getElementById("cart").classList.toggle("open"));
+document.getElementById("sumToggle").addEventListener("click", ()=>{ document.getElementById("cart").classList.toggle("open"); syncCartOpen(); });
+document.getElementById("cartFab").addEventListener("click", ()=>{
+  if(!cart.size){document.getElementById("grid").scrollIntoView({behavior:"smooth",block:"start"});return;}
+  const panel=document.getElementById("cart");
+  panel.classList.add("show","open");
+  syncCartOpen();
+  document.getElementById("items").scrollTop=0;
+});
 document.getElementById("items").addEventListener("click", e=>{
+  const po = e.target.closest("[data-pay]"); if(po){ pay = po.dataset.pay; renderCart(); return; }
+  const cp = e.target.closest("[data-copy]");
+  if(cp){ try{ navigator.clipboard.writeText(cp.dataset.copy).then(()=>{cp.textContent="اتنسخ ✓";},()=>{}); }catch(_){} return; }
   const b = e.target.closest("[data-q]"); if(!b) return;
-  const i = +b.dataset.q, q = (cart.get(i)||0) + (+b.dataset.d);
+  const i = +b.dataset.q, q = (cart.get(i)||0) + (+b.dataset.d), s = PRODUCTS[i].stock;
+  if(s!=null && q>s) return;
   q>0 ? cart.set(i,q) : cart.delete(i);
   renderGrid(); renderCart();
 });
@@ -319,14 +570,44 @@ document.querySelector("main").addEventListener("click", e=>{
   cart.has(i) ? cart.delete(i) : cart.set(i,1);
   renderGrid(); renderCart();
 });
+document.querySelector("main").addEventListener("click", e=>{
+  const m = e.target.closest(".more"); if(!m) return;
+  const d = m.previousElementSibling; const o = d.classList.toggle("open");
+  m.textContent = o ? "أقل" : "اقرأي المزيد";
+});
 document.getElementById("clearCart").addEventListener("click", ()=>{ cart.clear(); renderGrid(); renderCart(); });
+document.getElementById("mixList").addEventListener("click", e=>{
+  const b=e.target.closest("[data-mq]"); if(!b) return;
+  const i=+b.dataset.mq, q=(cart.get(i)||0)+(+b.dataset.md), s=PRODUCTS[i].stock;
+  if(s!=null&&q>s) return;
+  q>0?cart.set(i,q):cart.delete(i);
+  document.getElementById("mixMsg").textContent="";
+  renderGrid(); renderCart();
+});
+document.getElementById("mixGo").addEventListener("click", ()=>{
+  const msg=document.getElementById("mixMsg");
+  if(!cart.size){msg.textContent="اختاري منتج واحد على الأقل الأول.";msg.classList.add("error");return;}
+  msg.textContent="";
+  const panel=document.getElementById("cart"); panel.classList.add("show","open"); syncCartOpen();
+});
+document.getElementById("bundleCards").addEventListener("click", e=>{
+  const btn=e.target.closest("[data-bundle]"); if(!btn) return;
+  const b=BUNDLES.find(x=>x.id===btn.dataset.bundle);
+  const r=addItems(b&&bundleItems(b));
+  const msg=document.getElementById("bundleMsg");
+  msg.textContent=r.msg; msg.classList.toggle("error",!r.ok);
+});
 
-document.getElementById("cartBtn").innerHTML = WA_ICON + "اطلب الآن";
+document.getElementById("cartBtn").innerHTML = WA_ICON + "اطلبي الآن";
 const ask = document.getElementById("askBtn");
-ask.innerHTML = WA_ICON + "كلمنا على واتساب";
+ask.innerHTML = WA_ICON + "كلمينا على واتساب";
 ask.href = waLink(`أهلاً ${STORE_NAME} 👋\nعندي استفسار عن المنتجات`);
 document.getElementById("waText").textContent = "0" + WHATSAPP_NUMBER.slice(2);
-if(DISCOUNT_PCT>0) document.getElementById("promo").innerHTML = `🎁 خصم <b>${fmt(DISCOUNT_PCT)}٪</b> على أي طلب من ${fmt(DISCOUNT_MIN)} جنيه وأكتر`;
+{ const parts=[];
+  if(GIFT_MIN>0) parts.push(`<span class="pi">🎁 ${GIFT_NAME} <b>هدية</b> لما توصل مشترياتك لـ ${fmt(GIFT_MIN)} جنيه</span>`);
+  if(FREE_DELIVERY) parts.push(`<span class="pi">🚚 التوصيل <b>مجاني</b></span>`);
+  if(DISCOUNT_PCT>0) parts.push(`<span class="pi">عرض خاص: خصم <b>${fmt(DISCOUNT_PCT)}٪</b> لما مشترياتك توصل لـ ${fmt(DISCOUNT_MIN)} جنيه</span>`);
+  document.getElementById("promo").innerHTML = parts.join(' <span class="sep">•</span> '); }
 const fab = document.getElementById("fab");
 fab.innerHTML = WA_ICON;
 fab.href = waLink(`أهلاً ${STORE_NAME} 👋\nعندي استفسار عن المنتجات`);
@@ -358,14 +639,16 @@ function rowsToProducts(rows){
   const col = (...names)=> head.findIndex(h=>names.includes(h));
   const iName=col("المنتج","اسم المنتج","name"), iUnit=col("الوحدة","unit"), iPrice=col("السعر","price"),
         iCat=col("التصنيف","cat"), iStock=col("متوفر","inStock"), iImg=col("الصورة","img"),
-        iBest=col("الأكثر مبيعًا","الأكثر مبيعا","best"), iShow=col("يظهر في الموقع","show");
+        iBest=col("الأكثر مبيعًا","الأكثر مبيعا","best"), iShow=col("يظهر في الموقع","show"),
+        iDesc=col("الوصف","desc"), iQty=col("المخزون","الكمية المتاحة","stock");
   if(iName<0||iPrice<0) throw new Error("columns");
   const g=(r,i)=> i<0 ? "" : (r[i]||"").trim();
   return rows.slice(1).filter(r=>g(r,iName) && !NO.includes(g(r,iShow).toLowerCase())).map(r=>({
     name:g(r,iName), unit:g(r,iUnit)||"وحدة", price:toNum(g(r,iPrice)),
     cat:g(r,iCat)||"منتجات أخرى",
-    inStock: !NO.includes(g(r,iStock).toLowerCase()),
-    img:g(r,iImg), best: toNum(g(r,iBest)) || 0,
+    stock: g(r,iQty)==="" ? null : toNum(g(r,iQty)),
+    inStock: !NO.includes(g(r,iStock).toLowerCase()) && (g(r,iQty)==="" || toNum(g(r,iQty))>0),
+    img:g(r,iImg), best: toNum(g(r,iBest)) || 0, desc:g(r,iDesc),
   }));
 }
 
@@ -379,7 +662,7 @@ async function init(){
       if(list.length) PRODUCTS = list;
     }catch(err){ console.warn("Sheet not loaded, using backup list", err); }
   }
-  renderFilters(); renderGrid();
+  renderFilters(); renderGrid(); renderBundles(); updateWhiteFridayMessage(); renderCart();
 }
 init();
 </script>
